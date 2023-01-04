@@ -12,7 +12,7 @@ import javax.persistence.PersistenceContext;
 import java.util.List;
 
 @FieldDefaults(makeFinal = true, level = AccessLevel.PRIVATE)
-@Repository
+//@Repository("userDaoImp")
 public class UserDaoImp implements UserDao {
     @PersistenceContext
     EntityManager entityManager;

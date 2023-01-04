@@ -1,9 +1,14 @@
 package ru.kata.spring.boot_security.demo.service;
 
-import org.springframework.security.core.userdetails.UserDetailsService;
-import ru.kata.spring.boot_security.demo.dao.UserRegistrationDto;
 import ru.kata.spring.boot_security.demo.entity.User;
 
-public interface UserService extends UserDetailsService {
-    User save(UserRegistrationDto registrationDto);
+import java.util.List;
+
+public interface UserService {
+    User findByEmail(String email);
+    List<User> findAll();
+    User findOne(long id);
+    boolean save(User user);
+    void update(User user);
+    boolean delete(long id);
 }

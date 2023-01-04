@@ -6,20 +6,40 @@
 </head>
 <body>
 
-<form th:method="POST" th:action="@{/users}" th:object="${user}">
-  <lable for="name">Enter name: </lable>
+<form th:method="POST" th:action="@{/admin/users}" th:object="${user}">
+  <lable for="name">name: </lable>
   <input type="text" th:field="*{name}" id="name"/>
+  <br/>
   <div style="color:red" th:if="${#fields.hasErrors('name')}" th:errors="*{name}">Name error</div>
   <br/>
-  <lable for="lastName">Enter lastName: </lable>
+  <lable for="lastName">Lastname:</lable>
   <input type="text" th:field="*{lastName}" id="lastName"/>
+  <br/>
   <div style="color:red" th:if="${#fields.hasErrors('lastName')}" th:errors="*{lastName}">Lastname error</div>
   <br/>
-  <lable for="email">Enter email: </lable>
+  <lable for="email">Email:</lable>
   <input type="text" th:field="*{email}" id="email"/>
+  <br/>
   <div style="color:red" th:if="${#fields.hasErrors('email')}" th:errors="*{email}">Email error</div>
   <br/>
-  <input type="submit" value="Create"/>
+  <lable for="password">password:</lable>
+  <input type="text" th:field="*{password}" id="password"/>
+  <br/>
+  <div style="color:red" th:if="${#fields.hasErrors('password')}" th:errors="*{password}">Password error</div>
+  <br/>
+  <lable for="roles">roles (1-admin, 2-user):</lable>
+  <input type="text" th:field="*{roles}" id="roles"/>
+  <br/>
+
+  <br/>
+  <input type="submit" value="Create!"/>
+  <br/>
+
+  <br/>
+  <hr/>
+  <a th:href="@{/logout}">LOGOUT</a>
+  <br/>
+
 </form>
 
 </body>
