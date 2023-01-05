@@ -21,7 +21,6 @@ import java.util.Set;
 @Getter
 @ToString
 @NoArgsConstructor
-@AllArgsConstructor
 @FieldDefaults(level = AccessLevel.PRIVATE)
 @Entity
 @DynamicInsert
@@ -44,10 +43,10 @@ public class User implements Serializable, UserDetails {
     @Size(min = 2, max = 30, message = "Lastname should be between 2 and 30 characters")
     String lastName;
 
-    @Column(name = "email",unique = true)
+    @Column(name = "username",unique = true)
     @NotEmpty(message = "Email should not be empty")
     @Email(message = "This is insert, not email")
-    String email;
+    String username;
 
     @Column(name = "password")
     @NotEmpty(message = "Password should not be empty")
@@ -60,11 +59,10 @@ public class User implements Serializable, UserDetails {
             inverseJoinColumns = {@JoinColumn(name = "roles_id")})
     Set<Role> roles;
 
-    @Contract(pure = true)
-    public User(String name, String lastName, String email, String password, Set<Role> roles) {
+    public User(String name, String lastName, String username, String password, Set<Role> roles) {
         this.name = name;
         this.lastName = lastName;
-        this.email = email;
+        this.username = username;
         this.password = password;
         this.roles = roles;
     }
@@ -72,11 +70,6 @@ public class User implements Serializable, UserDetails {
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
         return roles;
-    }
-
-    @Override
-    public String getUsername() {
-        return email;
     }
 
     @Override

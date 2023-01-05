@@ -9,10 +9,11 @@ import ru.kata.spring.boot_security.demo.entity.User;
 
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
+import javax.persistence.TypedQuery;
 import java.util.List;
 
 @FieldDefaults(makeFinal = true, level = AccessLevel.PRIVATE)
-//@Repository("userDaoImp")
+@Repository("userDaoImp")
 public class UserDaoImp implements UserDao {
     @PersistenceContext
     EntityManager entityManager;
@@ -24,7 +25,8 @@ public class UserDaoImp implements UserDao {
 
     @Override
     public List<User> index() {
-        return entityManager.createQuery("select u from User u", User.class).getResultList();
+        return entityManager.createQuery("SELECT u FROM User u",
+                User.class).getResultList();
     }
 
     @Override
@@ -45,6 +47,13 @@ public class UserDaoImp implements UserDao {
     @Override
     public void delete(long id) {
         entityManager.remove(show(id));
+    }
+
+    @Override
+    public User findByUserName(String username) {
+        TypedQuery<User> query = entityManager.createQuery
+                ("SELECT u FROM User u WHERE u.username= :username", User.class);
+        return query.setParameter("username", username).getSingleResult();
     }
 
 }

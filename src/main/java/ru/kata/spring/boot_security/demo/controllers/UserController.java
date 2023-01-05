@@ -9,7 +9,7 @@ import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 import ru.kata.spring.boot_security.demo.entity.Author;
 import ru.kata.spring.boot_security.demo.entity.User;
-import ru.kata.spring.boot_security.demo.service.UserService;
+import ru.kata.spring.boot_security.demo.service.UserServiceJpa;
 
 import javax.validation.Valid;
 import javax.validation.constraints.NotNull;
@@ -20,10 +20,10 @@ import javax.validation.constraints.NotNull;
 @RequestMapping("/users")
 public class UserController {
 
-    UserService userService;
+    UserServiceJpa userService;
 
     @Autowired
-    public UserController(UserService userService) {
+    public UserController(UserServiceJpa userService) {
         this.userService = userService;
     }
 
@@ -61,16 +61,15 @@ public class UserController {
         return "users/edit";
     }
 
-//    @PatchMapping("/{id}")
-//    public String update (@ModelAttribute("user") @Valid User user,
-//                          BindingResult bindingResult,
-//                          @PathVariable("id") int id) {
-//        if (bindingResult.hasErrors()) {
-//            return "users/edit";
-//        }
-//        userService.update(id, user);
-//        return "redirect:/users";
-//    }
+    @PatchMapping("/{id}")
+    public String update (@ModelAttribute("user") @Valid User user,
+                          BindingResult bindingResult) {
+        if (bindingResult.hasErrors()) {
+            return "users/edit";
+        }
+        userService.update(user);
+        return "redirect:/users";
+    }
 
     @DeleteMapping("/{id}")
     public String delete(@PathVariable("id") int id) {

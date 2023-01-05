@@ -7,6 +7,7 @@ import org.hibernate.annotations.DynamicUpdate;
 import org.springframework.security.core.GrantedAuthority;
 
 import javax.persistence.*;
+import java.io.Serializable;
 import java.util.HashSet;
 import java.util.Set;
 
@@ -19,8 +20,8 @@ import java.util.Set;
 @DynamicUpdate
 @Entity
 @Table(name="roles")
-public class Role implements GrantedAuthority {
-
+public class Role implements Serializable, GrantedAuthority {
+    static long serialVersionUID = 1L;
     @Id
     @Column(name = "id")
     @GeneratedValue(strategy = GenerationType.IDENTITY)
