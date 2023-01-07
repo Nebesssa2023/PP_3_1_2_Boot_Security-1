@@ -13,7 +13,6 @@ import java.util.Set;
 
 @Setter
 @Getter
-@ToString
 @NoArgsConstructor
 @FieldDefaults(level = AccessLevel.PRIVATE)
 @DynamicInsert
@@ -27,10 +26,10 @@ public class Role implements Serializable, GrantedAuthority {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     Long id;
 
-    @Column(name = "role", unique = true)
+    @Column(name = "role", unique = true, nullable = false)
     String role;
 
-    @ManyToMany(mappedBy = "roles", fetch = FetchType.EAGER)
+    @ManyToMany(mappedBy = "roles")
     Set<User> users = new HashSet<>();
 
     public Role(String role) {
@@ -40,6 +39,12 @@ public class Role implements Serializable, GrantedAuthority {
 
     @Override
     public String getAuthority() {
-        return role;
+        return getRole();
+    }
+
+    @Override
+    public String toString(){
+        return role.substring(5);
     }
 }
+

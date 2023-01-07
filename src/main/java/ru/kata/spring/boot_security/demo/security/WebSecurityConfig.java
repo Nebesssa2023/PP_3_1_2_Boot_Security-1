@@ -12,32 +12,27 @@ import org.springframework.security.config.annotation.method.configuration.Enabl
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
+import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
+import ru.kata.spring.boot_security.demo.service.UserService;
 
 @FieldDefaults(makeFinal = true, level = AccessLevel.PRIVATE)
 @Configuration
 @EnableWebSecurity
-@EnableGlobalMethodSecurity(securedEnabled = true)
+@EnableGlobalMethodSecurity(prePostEnabled = true)
 public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 
     SuccessUserHandler successUserHandler;
-    UserDetailServiceImp userDetailService;
+    UserService userService;
 
 
     @Autowired
     public WebSecurityConfig(SuccessUserHandler successUserHandler,
-                             UserDetailServiceImp userDetailService) {
+                              UserService userService) {
         this.successUserHandler = successUserHandler;
-        this.userDetailService = userDetailService;
-    }
-
-    @Autowired
-    public void registerGlobalAuthentication(AuthenticationManagerBuilder auth) throws Exception {
-        auth
-                .userDetailsService(userDetailService)
-                .passwordEncoder(passwordEncoder());
+        this.userService = userService;
     }
 
     @Override
@@ -45,43 +40,41 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
         http
                 .csrf().disable()
                 .authorizeRequests()
-                .antMatchers("/user").hasAnyRole("USER", "ADMIN")
+                .antMatchers("/", "/login", "/registration", "/error").permitAll()
                 .antMatchers("/admin/**").hasRole("ADMIN")
-                .antMatchers("/login").anonymous()
+                .antMatchers("/users").hasRole("USER")
+                .anyRequest().authenticated()
+                .and()
+                .formLogin()
+                .loginPage("/login")
+                .loginProcessingUrl("/process_login")
+                .successHandler(successUserHandler)
+                .failureUrl("/login?error=true")
                 .and()
                 .exceptionHandling()
                 .accessDeniedPage("/user")
                 .and()
-                .formLogin()
-                .loginPage("/login")
-                .usernameParameter("username")
-                .passwordParameter("password")
-                .defaultSuccessUrl("/users/**")
-                .failureUrl("/login?error=true")
-                .permitAll()
-                .successHandler(successUserHandler);
-
-        http
                 .logout()
+                .logoutRequestMatcher(new AntPathRequestMatcher
+                        ("/logout", "POST"))
                 .invalidateHttpSession(true)
                 .clearAuthentication(true)
-                .permitAll()
-                .logoutRequestMatcher(new AntPathRequestMatcher("/logout"))
-                .logoutSuccessUrl("/login?logout");
+                .deleteCookies("JSESSIONID")
+                .logoutSuccessUrl("/login");
     }
 
-//   @Bean
-//   public DaoAuthenticationProvider daoAuthenticationProvider() {
-//        DaoAuthenticationProvider authenticationProvider = new DaoAuthenticationProvider();
-//        authenticationProvider.setPasswordEncoder(passwordEncoder());
-//        authenticationProvider.setUserDetailsService(userDetailService);
-//        return authenticationProvider;
-//   }
+   @Bean
+   public DaoAuthenticationProvider daoAuthenticationProvider() {
+        DaoAuthenticationProvider authenticationProvider = new DaoAuthenticationProvider();
+        authenticationProvider.setPasswordEncoder(passwordEncoder());
+        authenticationProvider.setUserDetailsService((UserDetailsService) userService);
+        return authenticationProvider;
+   }
 
     @Override
     protected void configure(@NotNull AuthenticationManagerBuilder auth) throws Exception {
         auth
-                .userDetailsService(userDetailService)
+                .userDetailsService((UserDetailsService)userService)
                 .passwordEncoder(passwordEncoder());
     }
 

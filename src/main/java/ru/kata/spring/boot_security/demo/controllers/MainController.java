@@ -17,7 +17,7 @@ import ru.kata.spring.boot_security.demo.service.UserService;
 @Author(name = "Victor Gabbasov", dateOfCreation = 2022)
 @FieldDefaults(makeFinal = true, level = AccessLevel.PRIVATE)
 @Controller
-@RequestMapping("/users")
+@RequestMapping("/")
 public class MainController {
 
     UserService userService;

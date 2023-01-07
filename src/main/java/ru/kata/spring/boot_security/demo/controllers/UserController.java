@@ -1,6 +1,6 @@
 package ru.kata.spring.boot_security.demo.controllers;
 
-import lombok.AccessLevel;
+import lombok.*;
 import lombok.experimental.FieldDefaults;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -9,7 +9,7 @@ import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 import ru.kata.spring.boot_security.demo.entity.Author;
 import ru.kata.spring.boot_security.demo.entity.User;
-import ru.kata.spring.boot_security.demo.service.UserServiceJpa;
+import ru.kata.spring.boot_security.demo.service.UserService;
 
 import javax.validation.Valid;
 import javax.validation.constraints.NotNull;
@@ -20,23 +20,23 @@ import javax.validation.constraints.NotNull;
 @RequestMapping("/users")
 public class UserController {
 
-    UserServiceJpa userService;
+    UserService userService;
 
     @Autowired
-    public UserController(UserServiceJpa userService) {
+    public UserController(UserService userService) {
         this.userService = userService;
     }
 
 
     @GetMapping()
     public String index(Model model) {
-        model.addAttribute("users", userService.findAll());
+        model.addAttribute("users", userService.index());
         return "users/index";
     }
 
     @GetMapping("/{id}")
     public String show(@PathVariable("id") long id, Model model) {
-        model.addAttribute("user", userService.findOne(id));
+        model.addAttribute("user", userService.show(id));
         return "users/show";
     }
 
@@ -57,7 +57,7 @@ public class UserController {
 
     @GetMapping("/{id}/edit")
     public String edit(Model model, @PathVariable("id") long id) {
-        model.addAttribute("user", userService.findOne(id));
+        model.addAttribute("user", userService.show(id));
         return "users/edit";
     }
 

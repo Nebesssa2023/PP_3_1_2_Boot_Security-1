@@ -5,18 +5,16 @@ import lombok.*;
 import lombok.experimental.FieldDefaults;
 import org.hibernate.annotations.DynamicInsert;
 import org.hibernate.annotations.DynamicUpdate;
-import org.jetbrains.annotations.Contract;
 import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
 import javax.persistence.*;
-import javax.validation.constraints.Email;
-import javax.validation.constraints.NotEmpty;
-import javax.validation.constraints.Size;
+import javax.validation.constraints.*;
 import java.io.Serializable;
-import java.util.Collection;
-import java.util.Set;
+import java.util.*;
 
+@EqualsAndHashCode
 @Setter
 @Getter
 @ToString
@@ -53,7 +51,7 @@ public class User implements Serializable, UserDetails {
     @Size(min = 8, max = 32, message = "Password should be between 8 and 32 characters")
     String password;
 
-    @ManyToMany(cascade = CascadeType.MERGE, fetch = FetchType.EAGER)
+    @ManyToMany(cascade = CascadeType.PERSIST, fetch = FetchType.EAGER)
     @JoinTable(name = "users_roles",
             joinColumns = {@JoinColumn(name = "user_id")},
             inverseJoinColumns = {@JoinColumn(name = "roles_id")})
@@ -69,7 +67,7 @@ public class User implements Serializable, UserDetails {
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
-        return roles;
+        return Collections.singletonList(new SimpleGrantedAuthority(getRoles().toString()));
     }
 
     @Override

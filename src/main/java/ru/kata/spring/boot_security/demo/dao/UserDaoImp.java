@@ -2,6 +2,7 @@ package ru.kata.spring.boot_security.demo.dao;
 
 
 import lombok.AccessLevel;
+import lombok.Data;
 import lombok.experimental.FieldDefaults;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
@@ -12,6 +13,7 @@ import javax.persistence.PersistenceContext;
 import javax.persistence.TypedQuery;
 import java.util.List;
 
+@Data
 @FieldDefaults(makeFinal = true, level = AccessLevel.PRIVATE)
 @Repository("userDaoImp")
 public class UserDaoImp implements UserDao {
@@ -37,22 +39,27 @@ public class UserDaoImp implements UserDao {
     @Override
     public void save(User user) {
         entityManager.persist(user);
+        entityManager.flush();
     }
 
     @Override
     public void update(User user) {
+        user.setRoles(entityManager.find(User.class, user.getId()).getRoles());
         entityManager.merge(user);
+        entityManager.flush();
     }
 
     @Override
     public void delete(long id) {
         entityManager.remove(show(id));
+        entityManager.flush();
     }
 
     @Override
     public User findByUserName(String username) {
-        TypedQuery<User> query = entityManager.createQuery
-                ("SELECT u FROM User u WHERE u.username= :username", User.class);
+        TypedQuery<User> query = entityManager.createQuery(
+                "SELECT u FROM User u WHERE u.username= :username",
+                User.class);
         return query.setParameter("username", username).getSingleResult();
     }
 
