@@ -6,7 +6,7 @@
 </head>
 <body>
 
-<form th:method="POST" th:action="@{/admin/new}" th:object="${user}">
+<form th:method="POST" th:action="@{/admin/users/new}" th:object="${user}">
   <lable for="name">name: </lable>
   <input type="text" th:field="*{name}" id="name"/>
   <br/>
@@ -18,29 +18,30 @@
   <div style="color:red" th:if="${#fields.hasErrors('lastName')}" th:errors="*{lastName}">Lastname error</div>
   <br/>
   <lable for="userName">Username:</lable>
-  <input type="text" th:field="*{userName}" id="userName"/>
+  <input type="text" th:field="*{username}" id="userName"/>
   <br/>
-  <div style="color:red" th:if="${#fields.hasErrors('username')}" th:errors="*{userName}">Username error</div>
+  <div style="color:red" th:if="${#fields.hasErrors('username')}" th:errors="*{username}">Username error</div>
   <br/>
   <lable for="password">password:</lable>
   <input type="text" th:field="*{password}" id="password"/>
   <br/>
   <div style="color:red" th:if="${#fields.hasErrors('password')}" th:errors="*{password}">Password error</div>
   <br/>
-  <lable for="roles">roles (1-admin, 2-user):</lable>
-  <input type="text" th:field="*{roles}" id="roles"/>
+  <label for="roles">Enter role:</label>
+  <select multiple name="roles" id="roles">
+    <option>ROLE_USER</option>
+    <option>ROLE_ADMIN</option>
+  </select>
+  <br/>
   <br/>
 
   <br/>
   <input type="submit" value="Create!"/>
   <br/>
-
-  <br/>
-  <hr/>
-  <a th:href="@{/logout}">LOGOUT</a>
-  <br/>
-
 </form>
-
+<br/>
+<form th:method="POST" th:action="@{/logout}">
+  <input type="submit" value="Logout">
+</form>
 </body>
 </html>

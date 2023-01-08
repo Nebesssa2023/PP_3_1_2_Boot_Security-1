@@ -39,7 +39,7 @@
 <hr>
 
 <br/>
-<form th:href="EDIT" th:action="@{/admin/{id}/edit(id=${user.getId()})}">
+<form th:method="GET" th:action="@{/admin/{id}/edit(id=${user.getId()})}">
   <input type="submit" value="edit"/>
 </form>
 <br>
@@ -51,6 +51,11 @@
 <br/>
 <form th:method="GET" th:action="@{/admin/users}">
   <input type="submit" value="Back">
+</form>
+
+<br/>
+<form th:method="POST" th:action="@{/logout}">
+  <input type="submit" value="Logout">
 </form>
 </body>
 </html>

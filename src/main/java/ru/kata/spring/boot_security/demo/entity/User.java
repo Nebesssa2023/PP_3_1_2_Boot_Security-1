@@ -41,7 +41,7 @@ public class User implements Serializable, UserDetails {
     String lastName;
 
     @Column(name = "username",unique = true)
-    @NotEmpty(message = "Email should not be empty")
+    @NotEmpty(message = "Username should not be empty")
     @Email(message = "This is insert, not email")
     String username;
 
@@ -50,7 +50,7 @@ public class User implements Serializable, UserDetails {
     @Size(min = 8, max = 32, message = "Password should be between 8 and 32 characters")
     String password;
 
-    @ManyToMany(cascade = CascadeType.PERSIST, fetch = FetchType.EAGER)
+    @ManyToMany(cascade = CascadeType.PERSIST)
     @JoinTable(name = "users_roles",
             joinColumns = {@JoinColumn(name = "user_id")},
             inverseJoinColumns = {@JoinColumn(name = "roles_id")})

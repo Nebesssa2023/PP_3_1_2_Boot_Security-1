@@ -6,7 +6,5 @@ import ru.kata.spring.boot_security.demo.entity.Role;
 @Repository("roleDao")
 public interface RoleDao {
     Role findRole(String role);
-    void saveRole(Role role);
 
-    void removeRoleById(Long id);
 }

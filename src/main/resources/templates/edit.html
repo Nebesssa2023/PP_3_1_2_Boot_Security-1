@@ -5,8 +5,8 @@
     <title>Update user</title>
 </head>
 <body>
-
-<form th:method="PATCH" th:action="@{/admin/{id}(id=${user.getId()})}" th:object="${user}">
+<form th:method="PATCH" th:action="@{/admin/{id}/edit(id=${user.getId()})}" th:object="${user}">
+    <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}" />
     <lable for="name">Name:</lable>
     <input type="text" th:field="*{name}" id="name"/>
     <br/>
@@ -26,16 +26,16 @@
 
     <br/>
     <lable for="password">password:</lable>
-    <input th:field="*{password}" type="text" id="password" hidden/>
+    <input th:field="*{password}" type="text" id="password" />
     <br/>
     <div style="color:red" th:if="${#fields.hasErrors('password')}" th:errors="*{password}">Password error</div>
 
     <br/>
-    <label for="roles">Roles:</label>
-    <input type="checkbox" name="roles" id="roles"
-           th:each="role : ${allRoles}"
-           th:text="${role.roles}"
-           th:value="${role.id}"/>
+    <label for="roles">Enter role:</label>
+    <select multiple name="roles" id="roles">
+        <option>ROLE_USER</option>
+        <option>ROLE_ADMIN</option>
+    </select>
     <br/>
 
     <br/>
@@ -46,7 +46,7 @@
 
 <br/>
 
-<form th:method="GET" th:action="@{/templates/admin}">
+<form th:method="GET" th:action="@{/admin/users}">
     <input type="submit" value="Show All Users">
 </form>
 
