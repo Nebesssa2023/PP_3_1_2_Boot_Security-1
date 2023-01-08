@@ -6,7 +6,7 @@
 </head>
 <body>
 
-<form th:method="POST" th:action="@{/admin/users}" th:object="${user}">
+<form th:method="POST" th:action="@{/admin/new}" th:object="${user}">
   <lable for="name">name: </lable>
   <input type="text" th:field="*{name}" id="name"/>
   <br/>
@@ -17,10 +17,10 @@
   <br/>
   <div style="color:red" th:if="${#fields.hasErrors('lastName')}" th:errors="*{lastName}">Lastname error</div>
   <br/>
-  <lable for="email">Email:</lable>
-  <input type="text" th:field="*{email}" id="email"/>
+  <lable for="userName">Username:</lable>
+  <input type="text" th:field="*{userName}" id="userName"/>
   <br/>
-  <div style="color:red" th:if="${#fields.hasErrors('email')}" th:errors="*{email}">Email error</div>
+  <div style="color:red" th:if="${#fields.hasErrors('username')}" th:errors="*{userName}">Username error</div>
   <br/>
   <lable for="password">password:</lable>
   <input type="text" th:field="*{password}" id="password"/>

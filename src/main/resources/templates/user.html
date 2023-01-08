@@ -3,12 +3,14 @@
 
 <head>
     <meta charset="UTF-8">
-    <link rel="stylesheet" type="text/css" href="/css/users_style.css"/>
+<!--    <link rel="stylesheet" type="text/css" href="/css/users_style.css"/>-->
     <title>User</title>
 </head>
 
 <body>
+<h1/>
 <p th:text="${'Hello, ' + user.getName() + '!'}"></p>
+    <h2/>
 <br/>
 
 <div>
@@ -42,19 +44,30 @@
     </table>
 </div>
 <br/>
-<hr/>
-<div sec:authorize="hasRole('ROLE_USER')">
-    <form th:method="GET" th:action="@{/user}">
-        <input type="submit" value="My user page">
-    </form>
-</div>
 
+<!--<div sec:authorize="hasRole('ROLE_USER')">-->
+<!--    <form th:method="GET" th:action="@{/user}">-->
+<!--        <input type="submit" value="My user page">-->
+<!--    </form>-->
+<!--</div>-->
+<h2>Welcome</h2>
+<p>Spring Security Thymeleaf tutorial</p>
+<div sec:authorize="hasRole('USER')">Text visible to user.</div>
+<div sec:authorize="hasRole('ADMIN')">Text visible to admin.</div>
+<div sec:authorize="isAuthenticated()">
+    Text visible only to authenticated users.
+</div>
+Authenticated username:
+<div sec:authentication="name"></div>
+Authenticated user roles:
+<div sec:authentication="principal.authorities"></div>
+<br/>
 <security:authorize access="hasRole('ROLE_ADMIN')">
     <form th:method="GET" th:action="@{/admin}">
-        <input type="submit" value="Show All Users">
+        <input type="submit" value="AdminPage">
     </form>
 </security:authorize>
-
+<br/>
 <form th:method="POST" th:action="@{/logout}">
     <input type="submit" value="Logout">
 </form>

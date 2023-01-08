@@ -35,21 +35,34 @@ public class AdminController {
         this.roleService = roleService;
     }
 
-    @GetMapping(value = {"/users", "/"})
-    public String index(@NotNull Model model) {
+    @GetMapping
+    public String adminPage(@NotNull Model model) {
+        model.addAttribute("users", userService.index());
+        return "admin";
+    }
+
+    @GetMapping("/{id}")
+    public String showUserById(@PathVariable("id") Long id, @NotNull Model model) {
+        model.addAttribute("user", userService.show(id));
+        return "findOne";
+    }
+
+    @GetMapping(value = {"/users"})
+    public String showAllUsers(@NotNull Model model) {
+        List<User> userList = userService.index();
         User user = userService.findByUserName(getCurrentUsername());
         model.addAttribute("roles", user.getRoles());
         model.addAttribute("user", user);
-        model.addAttribute("users", userService.index());
+        model.addAttribute("users", userList);
         User newUser = new User();
         model.addAttribute("newUser", newUser);
-        return "users";
+        return "findAll";
     }
 
-    @RequestMapping(value = "/addUser", method = RequestMethod.POST)
+    @RequestMapping(value = "/new", method = RequestMethod.POST)
     public String save(@ModelAttribute("user") User user,
-                          @RequestParam(value = "roleAdmin", required = false) String roleAdmin,
-                          @RequestParam(value = "roleUser", required = false) String roleUser) {
+                          @PathVariable(value = "roleAdmin", required = false) String roleAdmin,
+                          @PathVariable(value = "roleUser", required = false) String roleUser) {
         Set<Role> roles = new HashSet<>();
         if (roleAdmin != null) {
             roles.add(roleService.findRole(roleAdmin));
@@ -80,8 +93,8 @@ public class AdminController {
         return "redirect:/admin/users";
     }
 
-    @GetMapping("/delete")
-    public String deleteUser(@RequestParam("id") Long id){
+    @DeleteMapping("/{id}")
+    public String deleteUser(@PathVariable("id") Long id){
         userService.delete(id);
 
         return "redirect:/admin/users";

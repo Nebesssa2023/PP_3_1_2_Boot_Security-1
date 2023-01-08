@@ -5,19 +5,23 @@
   <title>Login page</title>
 </head>
 <body>
+<div class="container">
 <form name="login" method="post" action="/process_login">
-  <label for="username">Введите имя пользователя:</label>
-  <input type="text" name="username" id="username">
-  <br/>
-  <label for="password">Введите пароль: </label>
-  <input type="password" name="password" id="password">
-  <br/>
+  <h2>Login</h2>
+  <p>
+  <label for="username">Enter username:</label>
+  <input type="text" name="username" id="username" class="form-control" placeholder="Username" required>
+  <p/>
+  <p>
+  <label for="password">Enter password: </label>
+  <input type="password" name="password" id="password" class="form-control" placeholder="Password" required>
+  </p>
   <input type="submit" value="Login"/>
 
   <dif th:if="${param.error}" style="color: red">
     Неправильные имя пользователя или пароль!
   </dif>
 </form>
-
+</div>
 </body>
 </html>

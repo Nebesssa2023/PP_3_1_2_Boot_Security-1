@@ -14,7 +14,7 @@ import ru.kata.spring.boot_security.demo.entity.User;
 import ru.kata.spring.boot_security.demo.service.UserService;
 
 
-@Author(name = "Victor Gabbasov", dateOfCreation = 2022)
+@Author(name = "Victor Gabbasov", dateOfCreation = 2023)
 @FieldDefaults(makeFinal = true, level = AccessLevel.PRIVATE)
 @Controller
 @RequestMapping("/")
@@ -39,7 +39,7 @@ public class MainController {
     }
 
     @GetMapping("/user")
-    public String printUser(Model model) {
+    public String showUser(Model model) {
         User user = userService.findByUserName(getCurrentUsername());
         model.addAttribute("roles", user.getRoles());
         model.addAttribute("user", user);

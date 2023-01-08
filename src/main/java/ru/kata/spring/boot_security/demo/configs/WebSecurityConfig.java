@@ -1,4 +1,4 @@
-package ru.kata.spring.boot_security.demo.security;
+package ru.kata.spring.boot_security.demo.configs;
 
 import lombok.AccessLevel;
 import lombok.experimental.FieldDefaults;
@@ -16,6 +16,7 @@ import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
+import ru.kata.spring.boot_security.demo.configs.SuccessUserHandler;
 import ru.kata.spring.boot_security.demo.service.UserService;
 
 @FieldDefaults(makeFinal = true, level = AccessLevel.PRIVATE)
@@ -49,10 +50,8 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                 .loginPage("/login")
                 .loginProcessingUrl("/process_login")
                 .successHandler(successUserHandler)
+                .defaultSuccessUrl("/user")
                 .failureUrl("/login?error=true")
-                .and()
-                .exceptionHandling()
-                .accessDeniedPage("/user")
                 .and()
                 .logout()
                 .logoutRequestMatcher(new AntPathRequestMatcher

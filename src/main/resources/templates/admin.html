@@ -6,18 +6,20 @@
 </head>
 <body>
 Hello, Admin!
-<br/>
 
 <br/>
-<a th:href="@{/admin/users}">GO TO TABLE</a>
-<br/>
-<br/>
-<a th:href="@{/user}">user page</a>
+<form th:method="GET" th:action="@{/admin/users}">
+    <input type="submit" value="Show all users">
+</form>
 <br/>
 
+<form th:method="GET" th:action="@{/user}">
+    <input type="submit" value="Back">
+</form>
 <br/>
-<hr/>
-<a th:href="@{/logout}">LOGOUT</a>
+<form th:method="POST" th:action="@{/logout}">
+    <input type="submit" value="Logout">
+</form>
 
 </body>
 </html>

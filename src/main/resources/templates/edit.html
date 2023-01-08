@@ -6,7 +6,7 @@
 </head>
 <body>
 
-<form th:method="PATCH" th:action="@{/admin/users/{id}(id=${user.getId()})}" th:object="${user}">
+<form th:method="PATCH" th:action="@{/admin/{id}(id=${user.getId()})}" th:object="${user}">
     <lable for="name">Name:</lable>
     <input type="text" th:field="*{name}" id="name"/>
     <br/>
@@ -19,30 +19,41 @@
     <div style="color:red" th:if="${#fields.hasErrors('lastName')}" th:errors="*{lastName}">Lastname error</div>
 
     <br/>
-    <lable for="email">Email:</lable>
-    <input type="text" th:field="*{email}" id="email"/>
+    <lable for="username">Username:</lable>
+    <input type="text" th:field="*{username}" id="username"/>
     <br/>
-    <div style="color:red" th:if="${#fields.hasErrors('email')}" th:errors="*{email}">Email error</div>
+    <div style="color:red" th:if="${#fields.hasErrors('username')}" th:errors="*{username}">Username error</div>
 
     <br/>
     <lable for="password">password:</lable>
-    <input type="text" th:field="*{password}" id="password"/>
+    <input th:field="*{password}" type="text" id="password" hidden/>
     <br/>
     <div style="color:red" th:if="${#fields.hasErrors('password')}" th:errors="*{password}">Password error</div>
 
     <br/>
-    <lable for="roles">roles (1-admin, 2-user):</lable>
-    <input type="text" th:field="*{roles}" name="roles"/>
+    <label for="roles">Roles:</label>
+    <input type="checkbox" name="roles" id="roles"
+           th:each="role : ${allRoles}"
+           th:text="${role.roles}"
+           th:value="${role.id}"/>
     <br/>
 
     <br/>
     <input type="submit" value="Update!"/>
     <br/>
 
-    <br/>
-    <hr/>
-    <a th:href="@{/logout}">LOGOUT</a>
+</form>
 
+<br/>
+
+<form th:method="GET" th:action="@{/templates/admin}">
+    <input type="submit" value="Show All Users">
+</form>
+
+<br/>
+
+<form th:method="POST" th:action="@{/logout}">
+    <input type="submit" value="Logout">
 </form>
 
 </body>
