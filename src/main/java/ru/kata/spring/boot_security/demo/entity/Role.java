@@ -30,7 +30,7 @@ public class Role implements Serializable, GrantedAuthority {
     String role;
 
     @ManyToMany(mappedBy = "roles")
-    Set<User> users = new HashSet<>();
+    Set<User> users;
 
     public Role(String role) {
         super();

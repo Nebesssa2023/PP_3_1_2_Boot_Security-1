@@ -6,7 +6,7 @@
 </head>
 <body>
 
-<form th:method="POST" th:action="@{/admin/users/new}" th:object="${user}">
+<form th:method="POST" th:action="@{/admin}" th:object="${user}">
   <lable for="name">name: </lable>
   <input type="text" th:field="*{name}" id="name"/>
   <br/>

@@ -9,6 +9,8 @@ import org.springframework.transaction.annotation.Transactional;
 import ru.kata.spring.boot_security.demo.dao.RoleDao;
 import ru.kata.spring.boot_security.demo.entity.Role;
 
+import java.util.List;
+
 @FieldDefaults(makeFinal = true, level = AccessLevel.PRIVATE)
 @Data
 @Service
@@ -25,5 +27,21 @@ public class RoleServiceImp implements RoleService{
     @Override
     public Role findRole(String role) {
         return roleDao.findRole(role);
+    }
+
+    @Override
+    @Transactional
+    public void saveRole(Role role) {
+        roleDao.saveRole(role);
+    }
+
+    @Override
+    public Role roleById(Long id) {
+        return roleDao.roleById(id);
+    }
+
+    @Override
+    public List<Role> allRoles() {
+        return roleDao.allRoles();
     }
 }

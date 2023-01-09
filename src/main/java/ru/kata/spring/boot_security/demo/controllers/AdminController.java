@@ -68,26 +68,32 @@ public class AdminController {
 
     @PostMapping()
     public String create(@ModelAttribute("user") @Valid User user,
+                         Role role,
                          @NotNull BindingResult bindingResult) {
         if (bindingResult.hasErrors()) {
             return "new";
         }
+        roleService.saveRole(role);
         userService.save(user);
         return "redirect:/admin/users";
     }
 
     @GetMapping("/{id}/edit")
-    public String edit(Model model, @PathVariable("id") Long id) {
+    public String edit(@NotNull Model model, @PathVariable("id") Long id) {
+        model.addAttribute("roles", roleService.allRoles());
         model.addAttribute("user", userService.show(id));
         return "edit";
     }
 
-    @PatchMapping("/{id}")
-    public String update (@ModelAttribute("user") @Valid User user, @NotNull BindingResult bindingResult,
+    @PatchMapping("/edit/{id}")
+    public String update (@ModelAttribute("user") @Valid User user,
+                          Role role,
+                          @NotNull BindingResult bindingResult,
                           @PathVariable("id") Long id) {
         if (bindingResult.hasErrors()) {
             return "edit";
         }
+        roleService.saveRole(role);
         userService.update(id, user);
         return "redirect:/admin/users";
     }

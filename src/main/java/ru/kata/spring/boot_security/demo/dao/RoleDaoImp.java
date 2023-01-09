@@ -8,6 +8,7 @@ import ru.kata.spring.boot_security.demo.entity.Role;
 
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
+import java.util.List;
 
 @Data
 @FieldDefaults(makeFinal = true, level = AccessLevel.PRIVATE)
@@ -25,5 +26,22 @@ public class RoleDaoImp implements RoleDao{
     public Role findRole(String role) {
         return entityManager.find(Role.class, role);
     }
+
+    @Override
+    public void saveRole(Role role) {
+        entityManager.persist(role);
+    }
+
+    @Override
+    public Role roleById(Long id) {
+        return entityManager.find(Role.class, id);
+    }
+
+    @Override
+    public List<Role> allRoles() {
+        return entityManager.createQuery("SELECT r FROM Role r",
+                Role.class).getResultList();
+    }
+
 
 }
