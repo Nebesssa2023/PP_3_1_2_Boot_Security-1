@@ -5,8 +5,7 @@
     <title>Admin</title>
 </head>
 <body>
-Hello, Admin!
-
+<h2>Hello, Admin!</h2>
 <br/>
 <form th:method="GET" th:action="@{/admin/users}">
     <input type="submit" value="Show all users">
@@ -14,7 +13,7 @@ Hello, Admin!
 <br/>
 
 <form th:method="GET" th:action="@{/user}">
-    <input type="submit" value="Back">
+    <input type="submit" value="User view">
 </form>
 <br/>
 <form th:method="POST" th:action="@{/logout}">

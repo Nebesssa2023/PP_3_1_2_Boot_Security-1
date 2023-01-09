@@ -28,8 +28,16 @@ public class RoleDaoImp implements RoleDao{
     }
 
     @Override
+    public void editRole(Role role) {
+        role.setRole(entityManager.find(Role.class,role.getId()).getRole());
+        entityManager.merge(role);
+        entityManager.flush();
+    }
+
+    @Override
     public void saveRole(Role role) {
         entityManager.persist(role);
+        entityManager.flush();
     }
 
     @Override
@@ -41,6 +49,12 @@ public class RoleDaoImp implements RoleDao{
     public List<Role> allRoles() {
         return entityManager.createQuery("SELECT r FROM Role r",
                 Role.class).getResultList();
+    }
+
+    @Override
+    public void deleteRole(Long id) {
+        entityManager.remove(id);
+        entityManager.flush();
     }
 
 

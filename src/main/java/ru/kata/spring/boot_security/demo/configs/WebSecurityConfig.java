@@ -39,16 +39,15 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
     protected void configure(@NotNull HttpSecurity http) throws Exception {
         http
                 .authorizeRequests()
-                .antMatchers("/", "/login", "/registration", "/error").permitAll()
+                .antMatchers("/", "/login", "/error").permitAll()
                 .antMatchers("/admin/**").hasRole("ADMIN")
-                .antMatchers("/users").hasRole("USER")
+                .antMatchers("/user").hasAnyRole("USER","ADMIN")
                 .anyRequest().authenticated()
                 .and()
                 .formLogin()
                 .loginPage("/login")
                 .loginProcessingUrl("/process_login")
                 .successHandler(successUserHandler)
-                .defaultSuccessUrl("/user")
                 .failureUrl("/login?error=true")
                 .and()
                 .logout()
@@ -57,8 +56,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                 .invalidateHttpSession(true)
                 .clearAuthentication(true)
                 .deleteCookies("JSESSIONID")
-                .logoutSuccessUrl("/login").and()
-                .csrf().disable();
+                .logoutSuccessUrl("/login");
     }
 
    @Bean

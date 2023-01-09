@@ -4,6 +4,7 @@ package ru.kata.spring.boot_security.demo.dao;
 import lombok.AccessLevel;
 import lombok.Data;
 import lombok.experimental.FieldDefaults;
+import org.jetbrains.annotations.NotNull;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 import ru.kata.spring.boot_security.demo.entity.User;
@@ -43,7 +44,7 @@ public class UserDaoImp implements UserDao {
     }
 
     @Override
-    public void update(User user) {
+    public void update(@NotNull User user) {
         user.setRoles(entityManager.find(User.class, user.getId()).getRoles());
         entityManager.merge(user);
         entityManager.flush();

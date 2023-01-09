@@ -5,7 +5,8 @@
   <title>New user</title>
 </head>
 <body>
-
+<h2>Create new user</h2>
+<br/>
 <form th:method="POST" th:action="@{/admin}" th:object="${user}">
   <lable for="name">name: </lable>
   <input type="text" th:field="*{name}" id="name"/>
@@ -38,6 +39,10 @@
   <br/>
   <input type="submit" value="Create!"/>
   <br/>
+</form>
+<br/>
+<form th:method="GET" th:action="@{/admin/users}">
+  <input type="submit" value="Back">
 </form>
 <br/>
 <form th:method="POST" th:action="@{/logout}">

@@ -9,7 +9,11 @@ public interface RoleService {
 
     void saveRole(Role role);
 
+    void editRole(Role role);
+
     Role roleById(Long id);
 
     List<Role> allRoles();
+
+    void deleteRole(Long id);
 }

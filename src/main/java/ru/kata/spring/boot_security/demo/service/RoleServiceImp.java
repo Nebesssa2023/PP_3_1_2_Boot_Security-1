@@ -36,6 +36,12 @@ public class RoleServiceImp implements RoleService{
     }
 
     @Override
+    @Transactional
+    public void editRole(Role role) {
+        roleDao.editRole(role);
+    }
+
+    @Override
     public Role roleById(Long id) {
         return roleDao.roleById(id);
     }
@@ -43,5 +49,11 @@ public class RoleServiceImp implements RoleService{
     @Override
     public List<Role> allRoles() {
         return roleDao.allRoles();
+    }
+
+    @Override
+    @Transactional
+    public void deleteRole(Long id) {
+        roleDao.deleteRole(id);
     }
 }

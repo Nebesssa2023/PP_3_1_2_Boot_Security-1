@@ -8,7 +8,6 @@ import org.springframework.security.core.GrantedAuthority;
 
 import javax.persistence.*;
 import java.io.Serializable;
-import java.util.HashSet;
 import java.util.Set;
 
 @Setter
@@ -42,9 +41,5 @@ public class Role implements Serializable, GrantedAuthority {
         return getRole();
     }
 
-//    @Override
-//    public String toString(){
-//        return role.substring(5);
-//    }
 }
 

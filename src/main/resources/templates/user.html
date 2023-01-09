@@ -1,16 +1,17 @@
 <!DOCTYPE html>
-<html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.w3.org/1999/xhtml" xmlns:security="http://www.springframework.org/security/tags">
+<html lang="en" xmlns:th="http://www.thymeleaf.org"
+      xmlns:security="http://www.springframework.org/security/tags">
 
 <head>
     <meta charset="UTF-8">
-<!--    <link rel="stylesheet" type="text/css" href="/css/users_style.css"/>-->
     <title>User</title>
 </head>
 
 <body>
-<h1/>
-<p th:text="${'Hello, ' + user.getName() + '!'}"></p>
-    <h2/>
+<h2>
+    <p th:text="${'Hello, ' + user.getName() + '!'}"></p></h2>
+
+</h3>
 <br/>
 
 <div>
@@ -34,8 +35,8 @@
 
             <td>
                 <div th:each="role: ${user.getRoles()}">
-                    <span th:if="(${role.getRole()} == 'ROLE_ADMIN')" th:utext="admin"></span>
-                    <span th:if="(${role.getRole()} == 'ROLE_USER')" th:utext="user"></span>
+                    <span th:if="(${role.getRole()} == 'ROLE_ADMIN')" th:utext="ADMIN"></span>
+                    <span th:if="(${role.getRole()} == 'ROLE_USER')" th:utext="USER"></span>
                 </div>
             </td>
 
@@ -45,23 +46,6 @@
 </div>
 <br/>
 
-<!--<div sec:authorize="hasRole('ROLE_USER')">-->
-<!--    <form th:method="GET" th:action="@{/user}">-->
-<!--        <input type="submit" value="My user page">-->
-<!--    </form>-->
-<!--</div>-->
-<h2>Welcome</h2>
-<p>Spring Security Thymeleaf tutorial</p>
-<div sec:authorize="hasRole('USER')">Text visible to user.</div>
-<div sec:authorize="hasRole('ADMIN')">Text visible to admin.</div>
-<div sec:authorize="isAuthenticated()">
-    Text visible only to authenticated users.
-</div>
-Authenticated username:
-<div sec:authentication="name"></div>
-Authenticated user roles:
-<div sec:authentication="principal.authorities"></div>
-<br/>
 <security:authorize access="hasRole('ROLE_ADMIN')">
     <form th:method="GET" th:action="@{/admin}">
         <input type="submit" value="AdminPage">

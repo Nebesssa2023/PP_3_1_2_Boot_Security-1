@@ -16,11 +16,8 @@ import ru.kata.spring.boot_security.demo.entity.User;
 import ru.kata.spring.boot_security.demo.service.RoleService;
 import ru.kata.spring.boot_security.demo.service.UserService;
 
-import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
-import java.util.HashSet;
 import java.util.List;
-import java.util.Set;
 
 
 @Author(name = "Victor Gabbasov", dateOfCreation = 2022)
@@ -80,20 +77,18 @@ public class AdminController {
 
     @GetMapping("/{id}/edit")
     public String edit(@NotNull Model model, @PathVariable("id") Long id) {
-        model.addAttribute("roles", roleService.allRoles());
+        model.addAttribute("role", roleService.allRoles());
         model.addAttribute("user", userService.show(id));
         return "edit";
     }
 
     @PatchMapping("/edit/{id}")
     public String update (@ModelAttribute("user") @Valid User user,
-                          Role role,
                           @NotNull BindingResult bindingResult,
                           @PathVariable("id") Long id) {
         if (bindingResult.hasErrors()) {
             return "edit";
         }
-        roleService.saveRole(role);
         userService.update(id, user);
         return "redirect:/admin/users";
     }
@@ -101,7 +96,6 @@ public class AdminController {
     @DeleteMapping("/{id}")
     public String deleteUser(@PathVariable("id") Long id){
         userService.delete(id);
-
         return "redirect:/admin/users";
     }
 

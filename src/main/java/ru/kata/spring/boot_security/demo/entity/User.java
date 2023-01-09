@@ -50,7 +50,7 @@ public class User implements Serializable, UserDetails {
     @Size(min = 8, max = 100, message = "Password should be between 8 and 100 characters")
     String password;
 
-    @ManyToMany(cascade = CascadeType.PERSIST)
+    @ManyToMany(cascade = CascadeType.ALL)
     @JoinTable(name = "users_roles",
             joinColumns = {@JoinColumn(name = "user_id")},
             inverseJoinColumns = {@JoinColumn(name = "roles_id")})

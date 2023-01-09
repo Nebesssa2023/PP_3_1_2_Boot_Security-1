@@ -9,9 +9,13 @@ import java.util.List;
 public interface RoleDao {
     Role findRole(String role);
 
+    void editRole(Role role);
+
     void saveRole(Role role);
 
     Role roleById(Long id);
 
     List<Role> allRoles();
+
+    void deleteRole(Long id);
 }
