@@ -2,7 +2,6 @@ package ru.kata.spring.boot_security.demo.configs;
 
 import lombok.AccessLevel;
 import lombok.experimental.FieldDefaults;
-import org.jetbrains.annotations.NotNull;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;

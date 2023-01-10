@@ -5,7 +5,6 @@ import lombok.experimental.FieldDefaults;
 import org.hibernate.annotations.DynamicInsert;
 import org.hibernate.annotations.DynamicUpdate;
 import org.springframework.security.core.GrantedAuthority;
-
 import javax.persistence.*;
 import java.io.Serializable;
 import java.util.Set;
