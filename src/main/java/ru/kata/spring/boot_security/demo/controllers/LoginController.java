@@ -18,13 +18,13 @@ import ru.kata.spring.boot_security.demo.service.UserService;
 @FieldDefaults(makeFinal = true, level = AccessLevel.PRIVATE)
 @Controller
 @RequestMapping("/")
-public class MainController {
+public class LoginController {
 
     UserService userService;
 
     @Contract(pure = true)
     @Autowired
-    public MainController(UserService userService) {
+    public LoginController(UserService userService) {
         this.userService = userService;
     }
 

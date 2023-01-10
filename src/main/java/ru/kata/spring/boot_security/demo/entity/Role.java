@@ -17,7 +17,7 @@ import java.util.Set;
 @DynamicInsert
 @DynamicUpdate
 @Entity
-@Table(name="roles")
+@Table(name = "roles")
 public class Role implements Serializable, GrantedAuthority {
     static long serialVersionUID = 1L;
     @Id

@@ -30,18 +30,18 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 
     @Autowired
     public WebSecurityConfig(SuccessUserHandler successUserHandler,
-                              UserService userService) {
+                             UserService userService) {
         this.successUserHandler = successUserHandler;
         this.userService = userService;
     }
 
     @Override
-    protected void configure(@NotNull HttpSecurity http) throws Exception {
+    protected void configure(HttpSecurity http) throws Exception {
         http
                 .authorizeRequests()
                 .antMatchers("/", "/login", "/error").permitAll()
                 .antMatchers("/admin/**").hasRole("ADMIN")
-                .antMatchers("/user").hasAnyRole("USER","ADMIN")
+                .antMatchers("/user").hasAnyRole("USER", "ADMIN")
                 .anyRequest().authenticated()
                 .and()
                 .formLogin()
@@ -59,18 +59,18 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                 .logoutSuccessUrl("/login");
     }
 
-   @Bean
-   public DaoAuthenticationProvider daoAuthenticationProvider() {
+    @Bean
+    public DaoAuthenticationProvider daoAuthenticationProvider() {
         DaoAuthenticationProvider authenticationProvider = new DaoAuthenticationProvider();
         authenticationProvider.setPasswordEncoder(passwordEncoder());
         authenticationProvider.setUserDetailsService((UserDetailsService) userService);
         return authenticationProvider;
-   }
+    }
 
     @Override
-    protected void configure(@NotNull AuthenticationManagerBuilder auth) throws Exception {
+    protected void configure(AuthenticationManagerBuilder auth) throws Exception {
         auth
-                .userDetailsService((UserDetailsService)userService)
+                .userDetailsService((UserDetailsService) userService)
                 .passwordEncoder(passwordEncoder());
     }
 

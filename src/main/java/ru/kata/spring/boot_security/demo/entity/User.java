@@ -40,7 +40,7 @@ public class User implements Serializable, UserDetails {
     @Size(min = 2, max = 30, message = "Lastname should be between 2 and 30 characters")
     String lastName;
 
-    @Column(name = "username",unique = true)
+    @Column(name = "username", unique = true)
     @NotEmpty(message = "Username should not be empty")
     @Email(message = "This is insert, not email")
     String username;

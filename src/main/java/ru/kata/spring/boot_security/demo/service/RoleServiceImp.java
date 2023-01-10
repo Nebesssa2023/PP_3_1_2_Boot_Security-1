@@ -1,7 +1,6 @@
 package ru.kata.spring.boot_security.demo.service;
 
 import lombok.AccessLevel;
-import lombok.Data;
 import lombok.experimental.FieldDefaults;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -12,10 +11,9 @@ import ru.kata.spring.boot_security.demo.entity.Role;
 import java.util.List;
 
 @FieldDefaults(makeFinal = true, level = AccessLevel.PRIVATE)
-@Data
 @Service
 @Transactional(readOnly = true)
-public class RoleServiceImp implements RoleService{
+public class RoleServiceImp implements RoleService {
 
     RoleDao roleDao;
 
@@ -42,18 +40,18 @@ public class RoleServiceImp implements RoleService{
     }
 
     @Override
-    public Role roleById(Long id) {
-        return roleDao.roleById(id);
+    public Role findRoleById(Long id) {
+        return roleDao.findRoleById(id);
     }
 
     @Override
-    public List<Role> allRoles() {
-        return roleDao.allRoles();
+    public List<Role> getAllRoles() {
+        return roleDao.getAllRoles();
     }
 
     @Override
     @Transactional
-    public void deleteRole(Long id) {
-        roleDao.deleteRole(id);
+    public void deleteRoleById(Long id) {
+        roleDao.deleteRoleById(id);
     }
 }

@@ -13,9 +13,9 @@ public interface RoleDao {
 
     void saveRole(Role role);
 
-    Role roleById(Long id);
+    Role findRoleById(Long id);
 
-    List<Role> allRoles();
+    List<Role> getAllRoles();
 
-    void deleteRole(Long id);
+    void deleteRoleById(Long id);
 }

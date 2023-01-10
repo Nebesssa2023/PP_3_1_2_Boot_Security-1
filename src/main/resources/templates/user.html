@@ -1,6 +1,8 @@
 <!DOCTYPE html>
 <html lang="en" xmlns:th="http://www.thymeleaf.org"
-      xmlns:security="http://www.springframework.org/security/tags">
+      xmlns:security="http://www.springframework.org/security/tags"
+      xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+      xsi:schemaLocation="http://www.springframework.org/security/tags ">
 
 <head>
     <meta charset="UTF-8">
@@ -46,11 +48,12 @@
 </div>
 <br/>
 
-<security:authorize access="hasRole('ROLE_ADMIN')">
+<div security:authorize access ="hasRole('ADMIN')">
     <form th:method="GET" th:action="@{/admin}">
         <input type="submit" value="AdminPage">
     </form>
-</security:authorize>
+</div>
+
 <br/>
 <form th:method="POST" th:action="@{/logout}">
     <input type="submit" value="Logout">

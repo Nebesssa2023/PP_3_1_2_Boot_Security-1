@@ -14,7 +14,6 @@ import ru.kata.spring.boot_security.demo.entity.User;
 import java.util.List;
 
 @FieldDefaults(makeFinal = true, level = AccessLevel.PRIVATE)
-@Data
 @Service
 @Transactional(readOnly = true)
 public class UserServiceImp implements UserService, UserDetailsService {
@@ -28,31 +27,31 @@ public class UserServiceImp implements UserService, UserDetailsService {
     }
 
     @Override
-    public List<User> index() {
-        return userDao.index();
+    public List<User> getAllUsers() {
+        return userDao.getAllUsers();
     }
 
     @Override
-    public User show(long id) {
-        return userDao.show(id);
-    }
-
-    @Override
-    @Transactional
-    public void save(User user) {
-        userDao.save(user);
+    public User findUserById(long id) {
+        return userDao.findUserById(id);
     }
 
     @Override
     @Transactional
-    public void update(Long id, User user) {
-        userDao.update(user);
+    public void saveUser(User user) {
+        userDao.saveUser(user);
     }
 
     @Override
     @Transactional
-    public void delete(long id) {
-        userDao.delete(id);
+    public void editUser(Long id, User user) {
+        userDao.editUser(user);
+    }
+
+    @Override
+    @Transactional
+    public void deleteUserById(long id) {
+        userDao.deleteUserById(id);
     }
 
     @Override

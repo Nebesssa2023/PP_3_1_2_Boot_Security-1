@@ -10,13 +10,13 @@ import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import java.util.List;
 
-@Data
 @FieldDefaults(makeFinal = true, level = AccessLevel.PRIVATE)
 @Repository("roleDaoImp")
-public class RoleDaoImp implements RoleDao{
+public class RoleDaoImp implements RoleDao {
 
     @PersistenceContext
     EntityManager entityManager;
+
     @Autowired
     public RoleDaoImp(EntityManager entityManager) {
         this.entityManager = entityManager;
@@ -29,7 +29,7 @@ public class RoleDaoImp implements RoleDao{
 
     @Override
     public void editRole(Role role) {
-        role.setRole(entityManager.find(Role.class,role.getId()).getRole());
+        role.setRole(entityManager.find(Role.class, role.getId()).getRole());
         entityManager.merge(role);
         entityManager.flush();
     }
@@ -41,18 +41,18 @@ public class RoleDaoImp implements RoleDao{
     }
 
     @Override
-    public Role roleById(Long id) {
+    public Role findRoleById(Long id) {
         return entityManager.find(Role.class, id);
     }
 
     @Override
-    public List<Role> allRoles() {
+    public List<Role> getAllRoles() {
         return entityManager.createQuery("SELECT r FROM Role r",
                 Role.class).getResultList();
     }
 
     @Override
-    public void deleteRole(Long id) {
+    public void deleteRoleById(Long id) {
         entityManager.remove(id);
         entityManager.flush();
     }
