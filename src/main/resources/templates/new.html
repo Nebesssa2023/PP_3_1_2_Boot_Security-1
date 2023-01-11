@@ -18,10 +18,15 @@
   <br/>
   <div style="color:red" th:if="${#fields.hasErrors('lastName')}" th:errors="*{lastName}">Lastname error</div>
   <br/>
-  <lable for="userName">Username:</lable>
+  <lable for="Age">Age:</lable>
+  <input type="text" th:field="*{age}" id="Age"/>
+  <br/>
+  <div style="color:red" th:if="${#fields.hasErrors('age')}" th:errors="*{age}">Age error</div>
+  <br/>
+  <lable for="userName">Email:</lable>
   <input type="text" th:field="*{username}" id="userName"/>
   <br/>
-  <div style="color:red" th:if="${#fields.hasErrors('username')}" th:errors="*{username}">Username error</div>
+  <div style="color:red" th:if="${#fields.hasErrors('username')}" th:errors="*{username}">Email error</div>
   <br/>
   <lable for="password">password:</lable>
   <input type="text" th:field="*{password}" id="password"/>

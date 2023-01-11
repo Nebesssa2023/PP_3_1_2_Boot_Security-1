@@ -20,7 +20,7 @@ public class LoginController {
     }
 
     @GetMapping("/")
-    public String home() {
-        return "home";
+    public String goToLogin() {
+        return "redirect:/login";
     }
 }

@@ -36,11 +36,11 @@ public class DBInit implements ApplicationRunner {
         Role user = new Role("ROLE_USER");
         Set<Role> roleSetAdmin = new HashSet<>();
         roleSetAdmin.add(admin);
-        User adminUser = new User("Admin", "Adminov", "admin@mail.ru",
+        User adminUser = new User("Admin", "Adminov", 30, "admin@mail.ru",
                 "$2a$12$1zdunqaHtPP.bmoo6/FJZe9otLFFixn6TR7As8sa4ns3TeWDnWWnq", roleSetAdmin);
         Set<Role> roleSetUser = new HashSet<>();
         roleSetUser.add(user);
-        User casualUser = new User("User", "Userov", "user@mail.ru",
+        User casualUser = new User("User", "Userov", 40, "user@mail.ru",
                 "$2a$12$MhP7mSHU8AOun4DLgI7Gd.1ofXk.vojoQBoPDOzLAzqYmmUbaRUeG", roleSetUser);
 
         entityManager.persist(adminUser);

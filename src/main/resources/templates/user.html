@@ -20,9 +20,10 @@
     <table border="1">
         <thead>
         <tr>
-            <th>Id</th>
+            <th>ID</th>
             <th>Name</th>
             <th>Lastname</th>
+            <th>Age</th>
             <th>Email</th>
             <th>Role</th>
         </tr>
@@ -30,10 +31,11 @@
         <tbody>
         <tr>
 
-            <td th:text="${user.getId}">Id</td>
+            <td th:text="${user.getId}">ID</td>
             <td th:text="${user.getName()}">Name</td>
             <td th:text="${user.getLastName()}">Lastname</td>
-            <td th:text="${user.getUsername()}">Username</td>
+            <td th:text="${user.getAge()}">Age</td>
+            <td th:text="${user.getUsername()}">Email</td>
 
             <td>
                 <div th:each="role: ${user.getRoles()}">

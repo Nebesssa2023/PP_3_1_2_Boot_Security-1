@@ -40,6 +40,10 @@ public class User implements Serializable, UserDetails {
     @Size(min = 2, max = 30, message = "Lastname should be between 2 and 30 characters")
     String lastName;
 
+    @Column(name = "age")
+    @Min(value = 1, message = "Age should be greater than 0")
+    int age;
+
     @Column(name = "username", unique = true)
     @NotEmpty(message = "Username should not be empty")
     @Email(message = "This is insert, not email")
@@ -56,9 +60,10 @@ public class User implements Serializable, UserDetails {
             inverseJoinColumns = {@JoinColumn(name = "roles_id")})
     Set<Role> roles;
 
-    public User(String name, String lastName, String username, String password, Set<Role> roles) {
+    public User(String name, String lastName, int age, String username, String password, Set<Role> roles) {
         this.name = name;
         this.lastName = lastName;
+        this.age = age;
         this.username = username;
         this.password = password;
         this.roles = roles;
