@@ -51,7 +51,7 @@ public class User implements Serializable, UserDetails {
 
     @Column(name = "password")
     @NotEmpty(message = "Password should not be empty")
-    @Size(min = 8, max = 100, message = "Password should be between 8 and 100 characters")
+    @Size(min = 3, max = 100, message = "Password should be between 8 and 100 characters")
     String password;
 
     @ManyToMany(cascade = CascadeType.ALL)
