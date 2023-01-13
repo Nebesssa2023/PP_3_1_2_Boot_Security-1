@@ -19,7 +19,7 @@ public class LoginController {
         return "login";
     }
 
-    @GetMapping("/")
+    @GetMapping()
     public String goToLogin() {
         return "redirect:/login";
     }

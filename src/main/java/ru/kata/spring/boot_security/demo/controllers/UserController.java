@@ -30,7 +30,7 @@ public class UserController {
         User user = userService.findByUserName(getCurrentUsername());
         model.addAttribute("roles", user.getRoles());
         model.addAttribute("user", user);
-        return "user";
+        return "userPage";
     }
 
     public String getCurrentUsername() {

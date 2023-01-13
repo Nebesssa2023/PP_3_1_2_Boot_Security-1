@@ -33,20 +33,9 @@ public class AdminController {
         this.roleService = roleService;
     }
 
-    @GetMapping
+
+    @GetMapping()
     public String getAdminPage(Model model) {
-        model.addAttribute("users", userService.getAllUsers());
-        return "admin";
-    }
-
-    @GetMapping("/{id}")
-    public String showUserById(@PathVariable("id") Long id, Model model) {
-        model.addAttribute("user", userService.findUserById(id));
-        return "findOne";
-    }
-
-    @GetMapping(value = {"/users"})
-    public String showAllUsers(Model model) {
         List<User> userList = userService.getAllUsers();
         User user = userService.findByUserName(getCurrentUsername());
         model.addAttribute("roles", user.getRoles());
@@ -54,48 +43,48 @@ public class AdminController {
         model.addAttribute("users", userList);
         User newUser = new User();
         model.addAttribute("newUser", newUser);
-        return "findAll";
+        return "adminPage";
     }
 
-    @GetMapping("/users/new")
+    @GetMapping("/newUser")
     public String getNewUser(@ModelAttribute("user") User user) {
-        return "new";
+        return "redirect:/admin";
     }
 
-    @PostMapping()
+    @PostMapping("/newUser")
     public String createNewUser(@ModelAttribute("user") @Valid User user,
                          Role role,
                          BindingResult bindingResult) {
         if (bindingResult.hasErrors()) {
-            return "new";
+            return "redirect:/admin";
         }
         roleService.saveRole(role);
         userService.saveUser(user);
-        return "redirect:/admin/users";
+        return "redirect:/admin";
     }
 
-    @GetMapping("/{id}/edit")
+    @GetMapping("edit/{id}")
     public String getUserForEditById(Model model, @PathVariable("id") Long id) {
         model.addAttribute("role", roleService.getAllRoles());
         model.addAttribute("user", userService.findUserById(id));
-        return "edit";
+        return "redirect:/admin";
     }
 
     @PatchMapping("/edit/{id}")
     public String editUserById(@ModelAttribute("user") @Valid User user,
-                         BindingResult bindingResult,
-                         @PathVariable("id") Long id) {
+                                BindingResult bindingResult,
+                               @PathVariable("id") Long id) {
         if (bindingResult.hasErrors()) {
-            return "edit";
+            return "redirect:/admin";
         }
         userService.editUser(id, user);
-        return "redirect:/admin/users";
+        return "redirect:/admin";
     }
 
-    @DeleteMapping("/{id}")
+    @DeleteMapping("delete/{id}")
     public String deleteUserById(@PathVariable("id") Long id) {
         userService.deleteUserById(id);
-        return "redirect:/admin/users";
+        return "redirect:/admin";
     }
 
     public String getCurrentUsername() {
