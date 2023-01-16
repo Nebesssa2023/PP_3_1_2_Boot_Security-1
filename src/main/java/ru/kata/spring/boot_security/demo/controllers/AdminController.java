@@ -21,7 +21,7 @@ import java.util.List;
 
 @Author(name = "Victor Gabbasov", dateOfCreation = 2022)
 @FieldDefaults(makeFinal = true, level = AccessLevel.PRIVATE)
-@Controller
+@RestController
 @RequestMapping("/admin")
 public class AdminController {
     UserService userService;
