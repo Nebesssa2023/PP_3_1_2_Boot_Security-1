@@ -1,5 +1,6 @@
 package ru.kata.spring.boot_security.demo.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.*;
 import lombok.experimental.FieldDefaults;
 import org.hibernate.annotations.DynamicInsert;
@@ -27,6 +28,7 @@ public class Role implements Serializable, GrantedAuthority {
     @Column(name = "role", unique = true, nullable = false)
     String role;
 
+    @JsonIgnore
     @ManyToMany(mappedBy = "roles")
     Set<User> users;
 
