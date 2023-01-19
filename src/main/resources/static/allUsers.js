@@ -31,3 +31,6 @@ async function allUsers() {
             })
         })
 }
+$(document).ready(function() {
+    allUsers();
+});

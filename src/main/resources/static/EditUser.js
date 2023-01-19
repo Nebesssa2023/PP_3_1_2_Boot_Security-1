@@ -37,3 +37,6 @@ function editUser() {
         })
     })
 }
+$(document).ready(function() {
+    editUser();
+});

@@ -50,7 +50,7 @@ public class AdminRestController {
                 : new ResponseEntity<>(HttpStatus.NOT_FOUND);
     }
 
-    @PostMapping("/user/newUser")
+    @PostMapping(value = "/newUser", consumes = {"*/*"})
     public ResponseEntity<User> createNewUser(@RequestBody @Valid User user,
                                               @RequestBody @Valid Role role,
                                               BindingResult bindingResult) {
@@ -70,7 +70,7 @@ public class AdminRestController {
         return new ResponseEntity<>(user, HttpStatus.CREATED);
     }
 
-    @PatchMapping("/user/{id}")
+    @PatchMapping(value = "edit/{id}", consumes = {"*/*"})
     public ResponseEntity<User> editUserById(@RequestBody @Valid User user,
                                              BindingResult bindingResult,
                                              @PathVariable("id") Long id) {
@@ -89,7 +89,7 @@ public class AdminRestController {
         return new ResponseEntity<>(HttpStatus.OK);
     }
 
-    @DeleteMapping("user/{id}")
+    @DeleteMapping("/delete/{id}")
     public ResponseEntity<Void> deleteUserById(@PathVariable("id") Long id) {
         userService.deleteUserById(id);
         return ResponseEntity.ok().build();

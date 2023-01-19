@@ -48,3 +48,6 @@ async function newUser() {
     }
 
 }
+$(document).ready(function() {
+    newUser();
+});
