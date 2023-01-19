@@ -1,8 +1,9 @@
-$(async function() {
+$(async function () {
     await thisUser();
 });
+
 async function thisUser() {
-    fetch("http://localhost:8088/admin/viewUser")
+    fetch("http://localhost:8088/admin/user/viewUser")
         .then(res => res.json())
         .then(data => {
             // Добавляем информацию в шапку

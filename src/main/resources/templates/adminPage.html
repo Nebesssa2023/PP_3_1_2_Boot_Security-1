@@ -3,7 +3,11 @@
 <head>
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta http-equiv="Content-Security-Policy" content="default-src *;
+    img-src * 'self' data: https: http:;
+    script-src 'self' 'unsafe-inline' 'unsafe-eval' *;
+    style-src  'self' 'unsafe-inline' *">
+    <link rel="shortcut icon" href="https://example.com/favicon.ico">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/css/bootstrap.min.css" rel="stylesheet"
           integrity="sha384-rbsA2VBKQhggwzxH7pPCaAqO46MgnOM80zW1RWuH61DGLwZJEdK2Kadq2F9CUG65" crossorigin="anonymous">
     <title>Admin Page</title>
@@ -121,13 +125,13 @@
 
                         <!-- Modal Edit -->
                         <div class="modal fade" id="edit" tabindex="-1" role="dialog"
-                             aria-labelledby="editModalLabel"
+                             aria-labelledby="showEditModal"
                              aria-hidden="true">
                             <div class="modal-dialog" role="document">
                                 <div class="modal-content">
                                     <form id="formEditUser">
                                         <div class="modal-header">
-                                            <h5 class="modal-title" id="editModalLabel">Edit user</h5>
+                                            <h5 class="modal-title" id="showEditModal">Edit user</h5>
                                             <button type="button" class="close"
                                                     data-bs-dismiss="modal" aria-label="Close">
                                                 <span aria-hidden="true">&times;</span>
@@ -181,8 +185,8 @@
                                                 <br>
 
                                                 <label class="container-fluid"
-                                                       for="newUserRoles"><strong>Role</strong>
-                                                    <select id="newUserRolesEdit"
+                                                       for="rolesEditUser"><strong>Role</strong>
+                                                    <select id="rolesEditUser"
                                                             class="form-control" multiple size="2"
                                                             name="roles">
                                                         <option value="ROLE_ADMIN">ADMIN</option>
@@ -211,9 +215,9 @@
                              aria-hidden="true">
                             <div class="modal-dialog" role="document">
                                 <div class="modal-content">
-                                    <form id="formDeleteUser">
+                                    <form id="formDeleteUser" name="formDeleteUser">
                                         <div class="modal-header">
-                                            <h5 class="modal-title" id="examplModalLabel">Delete
+                                            <h5 class="modal-title" id="deleteModalLabel">Delete
                                                 user</h5>
                                             <button type="button" class="close" data-bs-dismiss="modal"
                                                     aria-label="Close">
@@ -332,14 +336,14 @@
                                 <div class="col-6 mx-auto">
                                     <label class="container-fluid" for="newUserRoles"><strong>Role</strong>
                                         <select id="newUserRoles" class="form-control" multiple size="2"
-                                                name="roles">
+                                                name="roles" required>
                                             <option value="ROLE_ADMIN">ADMIN</option>
                                             <option value="ROLE_USER">USER</option>
                                         </select>
                                     </label>
                                 </div>
 
-                                <p><input class="btn btn-success" type="submit" value="Add user"></p>
+                                <p><input class="btn btn-success" type="submit" value="addNewUser"></p>
 
                             </form>
                         </div>
@@ -384,12 +388,12 @@
         integrity="sha384-kenU1KFdBIe4zVF0s0G1M5b4hcpxyD9F7jL+jjXkk+Q2h455rYXK/7HAuoJl+0I4"
         crossorigin="anonymous"></script>
 
-<script type="text/javascript" src="../static/addUser.js"></script>
-<script type="text/javascript" src="../static/allUsers.js"></script>
-<script type="text/javascript" src="../static/DeleteModal.js"></script>
-<script type="text/javascript" src="../static/DeleteUser.js"></script>
-<script type="text/javascript" src="../static/EditModal.js"></script>
-<script type="text/javascript" src="../static/EditUser.js"></script>
-<script type="text/javascript" src="../static/UserPage.js"></script>
+<script src="allUsers.js"></script>
+<script src="newUser.js"></script>
+<script src="DeleteModal.js"></script>
+<script src="DeleteUser.js"></script>
+<script src="EditModal.js"></script>
+<script src="EditUser.js"></script>
+<script src="UserPage.js"></script>
 </body>
 </html>

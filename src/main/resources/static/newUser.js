@@ -1,14 +1,15 @@
-$(async function() {
+$(async function () {
     await newUser();
 });
+
 async function newUser() {
-    await fetch("http://localhost:8088/admin/roles")
+    await fetch("http://localhost:8088/admin/user/roles")
         .then(res => res.json())
         .then(roles => {
             roles.forEach(role => {
                 let el = document.createElement("option");
-                el.text = role.role.substring(5);
                 el.value = role.id;
+                el.text = role.role.substring(5);
                 $('#newUserRoles')[0].appendChild(el);
             })
         })
@@ -22,11 +23,11 @@ async function newUser() {
         let newUserRoles = [];
         for (let i = 0; i < form.roles.options.length; i++) {
             if (form.roles.options[i].selected) newUserRoles.push({
-                id : form.roles.options[i].value,
-                name : form.roles.options[i].name
+                id: form.roles.options[i].value,
+                role: form.roles.options[i].role
             })
         }
-        fetch("http://localhost:8088/admin/newUser", {
+        fetch("http://localhost:8088/admin/user/newUser", {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json'
@@ -37,7 +38,6 @@ async function newUser() {
                 age: form.age.value,
                 username: form.username.value,
                 password: form.password.value,
-
                 roles: newUserRoles
             })
         }).then(() => {

@@ -16,9 +16,7 @@ async function showEditModal(id) {
     form.password.value = user.password;
 
 
-
-
-    await fetch("http://localhost:8088/admin/roles")
+    await fetch("http://localhost:8088/admin/user/roles")
         .then(res => res.json())
         .then(roles => {
             roles.forEach(role => {

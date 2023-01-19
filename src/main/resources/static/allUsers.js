@@ -1,10 +1,11 @@
-$(async function() {
+$(async function () {
     await allUsers();
 });
 const table = $('#tbodyAllUserTable');
+
 async function allUsers() {
     table.empty()
-    fetch("http://localhost:8088/admin")
+    fetch("http://localhost:8088/admin/users", {credentials:'same-origin'})
         .then(res => res.json())
         .then(data => {
             data.forEach(user => {

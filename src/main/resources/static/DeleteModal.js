@@ -15,10 +15,9 @@ async function showDeleteModal(id) {
     form.password.value = user.password;
 
 
-
     $('#rolesDeleteUser').empty();
 
-    await fetch("http://localhost:8088/admin/roles")
+    await fetch("http://localhost:8088/admin/user/roles")
         .then(res => res.json())
         .then(roles => {
             roles.forEach(role => {
@@ -37,8 +36,9 @@ async function showDeleteModal(id) {
             })
         });
 }
+
 async function getUser(id) {
-    let url = "http://localhost:8088/admin/" + id;
+    let url = "http://localhost:8088/admin/user" + id;
     let response = await fetch(url);
     return await response.json();
 }
