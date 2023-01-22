@@ -55,7 +55,7 @@ public class User implements Serializable, UserDetails {
     @Size(min = 3, max = 200, message = "Password should be between 8 and 100 characters")
     String password;
 
-    @JsonIgnore
+//    @JsonIgnore
     @ManyToMany(cascade = CascadeType.ALL)
     @JoinTable(name = "users_roles",
             joinColumns = {@JoinColumn(name = "user_id")},

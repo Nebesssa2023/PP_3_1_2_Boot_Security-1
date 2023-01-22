@@ -1,6 +1,8 @@
 package ru.kata.spring.boot_security.demo.entity;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonInclude;
 import lombok.*;
 import lombok.experimental.FieldDefaults;
 import org.hibernate.annotations.DynamicInsert;
@@ -17,6 +19,7 @@ import java.util.Set;
 @DynamicInsert
 @DynamicUpdate
 @Entity
+@JsonInclude(JsonInclude.Include.NON_NULL)
 @Table(name = "roles")
 public class Role implements Serializable, GrantedAuthority {
     static long serialVersionUID = 1L;
@@ -28,8 +31,9 @@ public class Role implements Serializable, GrantedAuthority {
     @Column(name = "role", unique = true, nullable = false)
     String role;
 
-    @JsonIgnore
+//    @JsonIgnore
     @ManyToMany(mappedBy = "roles")
+    @JsonBackReference
     Set<User> users;
 
     public Role(String role) {

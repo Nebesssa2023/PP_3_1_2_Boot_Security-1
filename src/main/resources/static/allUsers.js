@@ -5,7 +5,7 @@ const table = $('#tbodyAllUserTable');
 
 async function allUsers() {
     table.empty()
-    fetch("http://localhost:8088/admin/users", {credentials:'same-origin'})
+    fetch("http://localhost:8088/admin/users/", {credentials:'same-origin'})
         .then(res => res.json())
         .then(data => {
             data.forEach(user => {
@@ -16,14 +16,13 @@ async function allUsers() {
                             <td>${user.lastName}</td>
                             <td>${user.age}</td>
                             <td>${user.username}</td>
-                            <td>${user.password}</td> 
                             <td>${user.roles.map(role => " " + role.role.substring(5))}</td>
                             <td>
-                                <button type="button" class="btn btn-info" data-toggle="modal" id="buttonEdit"
+                                <button type="button" class="btn btn-info" data-toggle="modal" id="editUserButton"
                                 data-action="edit" data-id="${user.id}" data-target="#edit">Edit</button>
                             </td>
                             <td>
-                                <button type="button" class="btn btn-danger" data-toggle="modal" id="buttonDelete"
+                                <button type="button" class="btn btn-danger" data-toggle="modal" id="deleteButton"
                                 data-action="delete" data-id="${user.id}" data-target="#delete">Delete</button>
                             </td>
                         </tr>)`;
