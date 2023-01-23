@@ -39,11 +39,11 @@ public class AdminController {
         List<User> userList = userService.getAllUsers();
         User user = userService.findByUserName(getCurrentUsername());
         model.addAttribute("roles", user.getRoles());
-        model.addAttribute("user", user);
-        model.addAttribute("users", userList);
+        model.addAttribute("admin", user);
+        model.addAttribute("people", userList);
         User newUser = new User();
-        model.addAttribute("newUser", newUser);
-        return "adminPage2";
+        model.addAttribute("person", newUser);
+        return "admin";
     }
 
     public String getCurrentUsername() {

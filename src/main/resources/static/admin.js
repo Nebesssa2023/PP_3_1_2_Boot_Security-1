@@ -1,7 +1,7 @@
 let allUsers;
 let allRoles;
 
-fetch('http://localhost:8088/admin/roles').then(
+fetch('http://localhost:8088/rest/roles').then(
     res => {
         res.json().then(
             roles => {
@@ -11,18 +11,18 @@ fetch('http://localhost:8088/admin/roles').then(
     }
 )
 
-fetch('http://localhost:8088/admin/users').then(
+fetch('http://localhost:8088/rest/users').then(
     res => {
         res.json().then(
             data => {
                 allUsers = data;
-                getUserTable(allUsers);
+                createTable(allUsers);
             }
         )
     }
 )
 
-function getUserTable(data) {
+function createTable(data) {
     let temp = "";
     data.forEach(u => {
         console.log(u)
@@ -35,7 +35,7 @@ function getUserTable(data) {
         temp += "<td>";
         let rolesStr = "";
         u.roles.forEach(r => {
-            rolesStr += r.role.substring(5);
+            rolesStr += r.role.replaceAll("ROLE_", "") + " ";
         })
         temp += rolesStr + "</td>";
         temp += "<td><button class=\"btn btn-info\" onclick=\"fEdit(this)\" id=\"editBtn" + u.id + "\">Edit</button></td>";
@@ -44,7 +44,7 @@ function getUserTable(data) {
     document.getElementById("usersTableBody").innerHTML = temp;
 }
 
-fetch('http://localhost:8088/admin/user').then(
+fetch('http://localhost:8088/rest/user').then(
     res => {
         res.json().then(
             data => {
@@ -58,7 +58,7 @@ fetch('http://localhost:8088/admin/user').then(
                 temp += "<td>";
                 let rolesStr = "";
                 data.roles.forEach(r => {
-                    rolesStr += r.role.substring(5) + " ";
+                    rolesStr += r.role.replaceAll("ROLE_", "") + " ";
                 })
                 temp += rolesStr + "</td>" + "</tr>";
                 document.getElementById("tableUserBody2").innerHTML = temp;
@@ -66,7 +66,7 @@ fetch('http://localhost:8088/admin/user').then(
         )
     }
 )
-fetch('http://localhost:8088/admin/roles').then(
+fetch('http://localhost:8088/rest/roles').then(
     res => {
         res.json().then(
             roles => {
@@ -74,7 +74,7 @@ fetch('http://localhost:8088/admin/roles').then(
                 console.log(roles)
                 document.getElementById("rolesNew").size = roles.length;
                 roles.forEach(r => {
-                    temp += "<option>" + r.role.substring(5) + " " + "</option>";
+                    temp += "<option>" + r.role + "</option>";
                 })
                 document.getElementById("rolesNew").innerHTML = temp;
             }
@@ -90,22 +90,22 @@ $('#addUserBtn').click(function () {
         password: "",
         roles: []
     };
+    newUser.username = document.getElementById("emailNew").value;
     newUser.name = document.getElementById("nameNew").value;
     newUser.lastName = document.getElementById("lastNameNew").value;
     newUser.age = document.getElementById("AgeNew").value;
-    newUser.username = document.getElementById("usernameNew").value;
     newUser.password = document.getElementById("passwordNew").value;
     newUser.roles = [];
     [].slice.call(document.getElementById("rolesNew")).forEach(op => {
         if (op.selected) {
             allRoles.forEach(r => {
-                if (r.role === op.text) {
+                if (r.role == op.text) {
                     newUser.roles.push(r);
                 }
             })
         }
     })
-    fetch('http://localhost:8088/admin/users', {
+    fetch('http://localhost:8088/rest/users', {
         method: 'POST',
         body: JSON.stringify(newUser),
         headers: {'Content-Type': 'application/json'}
@@ -113,12 +113,12 @@ $('#addUserBtn').click(function () {
         if (res1.ok) {
             res1.json().then(u => {
                 allUsers.push(u);
-                getUserTable(allUsers);
+                createTable(allUsers);
             })
             document.getElementById("nameNew").value = "";
             document.getElementById("lastNameNew").value = "";
             document.getElementById("AgeNew").value = "";
-            document.getElementById("usernameNew").value = "";
+            document.getElementById("emailNew").value = "";
             document.getElementById("passwordNew").value = "";
             document.getElementById("rolesNew").selectedIndex = -1;
         } else {
@@ -131,7 +131,7 @@ $('#addUserBtn').click(function () {
 function getUserById(id) {
     let t = null;
     allUsers.forEach(u => {
-        if (u.id === id) {
+        if (u.id == id) {
             t = u;
         }
     })
@@ -154,20 +154,20 @@ $('#editUserBtn').click(function () {
     edit.name = document.getElementById("nameEditModal").value;
     edit.lastName = document.getElementById("lastNameEditModal").value;
     edit.age = document.getElementById("ageEditModal").value;
-    edit.username = document.getElementById("usernameEditModal").value;
+    edit.username = document.getElementById("emailEditModal").value;
     edit.password = document.getElementById("passwordEditModal").value;
     edit.roles = [];
     [].slice.call(document.getElementById("rolesEditModal")).forEach(op => {
         if (op.selected) {
             allRoles.forEach(r => {
-                if (r.role === op.text) {
+                if (r.role == op.text) {
                     edit.roles.push(r);
                 }
             })
         }
     })
     console.log(edit)
-    fetch('http://localhost:8088/admin/users/' + id, {
+    fetch('http://localhost:8088/rest/users/' + id, {
         method: 'PUT',
         body: JSON.stringify(edit),
         headers: {'Content-Type': 'application/json'}
@@ -175,7 +175,7 @@ $('#editUserBtn').click(function () {
         .then(res => {
             if (res.ok) {
                 allUsers.forEach(u => {
-                    if (u.id === edit.id) {
+                    if (u.id == edit.id) {
                         u.name = edit.name;
                         u.lastName = edit.lastName;
                         u.age = edit.age;
@@ -186,7 +186,7 @@ $('#editUserBtn').click(function () {
                         u.roles = edit.roles;
                     }
                 })
-                getUserTable(allUsers);
+                createTable(allUsers);
             }
         });
 
@@ -196,7 +196,7 @@ $('#delUserBtn').click(function () {
     let id = document.getElementById("idDelModal").value;
     $('#deleteModal').modal('hide');
 
-    fetch('http://localhost:8088/admin/users/' + id, {method: 'DELETE'})
+    fetch('http://localhost:8088/rest/users/' + id, {method: 'DELETE'})
         .then(res => {
             if (res.ok) {
                 document.getElementById(id).remove();
@@ -209,7 +209,7 @@ $('#delUserBtn').click(function () {
 
 function fEdit(el) {
     let idStr = el.id;
-    let id = idStr.slice(7);
+    let id = idStr.slice(7);//editBtn=(7)
     allUsers.forEach(u => {
         if (u.id == id) {
             console.log(u);
@@ -224,11 +224,11 @@ function fEdit(el) {
             allRoles.forEach(r => {
                 let select = "";
                 u.roles.forEach(rUser => {
-                    if (rUser.id === r.id) {
+                    if (rUser.id == r.id) {
                         select = " selected";
                     }
                 })
-                temp += "<option" + select + ">" + r.role.substring(5) + "</option>";
+                temp += "<option" + select + ">" + r.role + "</option>";
             })
             document.getElementById("rolesEditModal").innerHTML = temp;
         }
@@ -250,7 +250,7 @@ function fDel(el) {
             document.getElementById("rolesDelModal").size = u.roles.length.toString();
             let temp = "";
             u.roles.forEach(r => {
-                temp += "<option>" + r.role.substring(5) + "</option>";
+                temp += "<option>" + r.role.replaceAll("ROLE_", "") + "</option>";
             })
             document.getElementById("rolesDelModal").innerHTML = temp;
         }

@@ -20,11 +20,9 @@ import java.security.Principal;
 @FieldDefaults(makeFinal = true, level = AccessLevel.PRIVATE)
 @CrossOrigin
 @RestController
-@RequestMapping("/info/user")
+@RequestMapping("/api/user")
 public class UserRestController {
-
     UserService userService;
-
 
     @Autowired
     public UserRestController(UserService userService) {
@@ -32,8 +30,8 @@ public class UserRestController {
     }
 
     @GetMapping
-    public ResponseEntity<User> getUserInfo(Principal principal) {
-        return ResponseEntity.ok((User) userService
-                .loadUserByUsername(principal.getName()));
+    public ResponseEntity<User> showUser(Principal principal) {
+        return ResponseEntity.ok((User)
+                userService.loadUserByUsername(principal.getName()));
     }
 }

@@ -5,9 +5,7 @@ import lombok.experimental.FieldDefaults;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.security.core.Authentication;
-import org.springframework.validation.BindingResult;
-import org.springframework.validation.FieldError;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.web.bind.annotation.*;
 import ru.kata.spring.boot_security.demo.entity.Author;
 import ru.kata.spring.boot_security.demo.entity.Role;
@@ -16,6 +14,7 @@ import ru.kata.spring.boot_security.demo.service.RoleService;
 import ru.kata.spring.boot_security.demo.service.UserService;
 
 import javax.validation.Valid;
+import java.security.Principal;
 import java.util.List;
 
 
@@ -23,7 +22,7 @@ import java.util.List;
 @FieldDefaults(makeFinal = true, level = AccessLevel.PRIVATE)
 @CrossOrigin
 @RestController
-@RequestMapping(path = {"/admin"})
+@RequestMapping(path = {"/rest"})
 public class AdminRestController {
     UserService userService;
     RoleService roleService;
@@ -35,7 +34,23 @@ public class AdminRestController {
     }
 
 
-    @GetMapping(value = "/users")
+    @GetMapping("/roles")
+    public ResponseEntity<List<Role>> getAllRoles() {
+        return new ResponseEntity<>(roleService.getAllRoles(), HttpStatus.OK);
+    }
+
+    @PostMapping("/users")
+    public ResponseEntity<User> createNewUser(@Valid User user) {
+        userService.saveUser(user);
+        return new ResponseEntity<>(user, HttpStatus.CREATED);
+    }
+
+    @GetMapping("/user")
+    public ResponseEntity<UserDetails> getUserById(Principal principal) {
+        return new ResponseEntity<>(userService.loadUserByUsername(principal.getName()), HttpStatus.OK);
+    }
+
+    @GetMapping("/users")
     public ResponseEntity<List<User>> getAllUsers() {
         List<User> users = userService.getAllUsers();
         return users != null && !users.isEmpty()
@@ -43,47 +58,16 @@ public class AdminRestController {
                 : new ResponseEntity<>(HttpStatus.NOT_FOUND);
     }
 
-    @GetMapping(value = "/users/{id}")
-    public ResponseEntity<User> getUserById(@PathVariable("id") Long id) {
-        User user = userService.findUserById(id);
-        return user != null
-                ? new ResponseEntity<>(user, HttpStatus.OK)
-                : new ResponseEntity<>(HttpStatus.NOT_FOUND);
-    }
-
-    @PostMapping(value = "/newUser")
-    public ResponseEntity<User> createNewUser( @Valid User user,
-                                               @Valid Role role) {
-        roleService.saveRole(role);
-        userService.saveUser(user);
-        return new ResponseEntity<>(user, HttpStatus.CREATED);
-    }
-
-    @PatchMapping(value = "edit/{id}")
-    public ResponseEntity<User> editUserById( @Valid User user,
-                                             @PathVariable("id") Long id) {
+    @PutMapping("/users/{id}")
+    public ResponseEntity<User> editUserById(@RequestBody @Valid User user,
+                                              @PathVariable("id") Long id) {
         userService.editUser(id, user);
         return new ResponseEntity<>(HttpStatus.OK);
     }
 
-    @DeleteMapping("/delete/{id}")
+    @DeleteMapping("/users/{id}")
     public ResponseEntity<Void> deleteUserById(@PathVariable("id") Long id) {
         userService.deleteUserById(id);
         return ResponseEntity.ok().build();
     }
-
-    @GetMapping("/user")
-    public ResponseEntity<User> showUser(Authentication authentication) {
-        return new ResponseEntity<>((User) authentication.getPrincipal(), HttpStatus.OK);
-    }
-
-    @GetMapping("/roles")
-    public ResponseEntity<List<Role>> getAllRoles() {
-        return new ResponseEntity<>(roleService.getAllRoles(), HttpStatus.OK);
-    }
-
-//    @GetMapping("/user/roles/{id}")
-//    public ResponseEntity<Role> getRoleById(@PathVariable("id") Long id) {
-//        return new ResponseEntity<>(roleService.findRoleById(id), HttpStatus.OK);
-//    }
 }

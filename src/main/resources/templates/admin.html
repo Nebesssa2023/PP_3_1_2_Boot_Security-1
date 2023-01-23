@@ -11,11 +11,9 @@
 
 <header class="navbar navbar-dark sticky-top bg-dark flex-md-nowrap p-0 shadow">
   <div class="navbar-text px-3">
-    <b><span th:text="${user.getUsername()}"></span></b> with roles:
-    <th:block th:each="role : ${user.getRoles()}">
-      <span th:if="(${role.getRole()} == 'ROLE_ADMIN')" th:utext="ADMIN"></span>
-      <span th:if="(${role.getRole()} == 'ROLE_USER')" th:utext="USER"></span>
-    </th:block>
+    <strong><a th:utext="${admin.username}"></a></strong>
+    <a>with roles:</a>
+    <a th:utext="${admin.roles}"></a>
   </div>
   <ul class="navbar-nav px-3">
     <li class="nav-item text-nowrap">
@@ -27,28 +25,28 @@
   <div class="row">
     <div class="col-2 pt-2">
       <div class="nav flex-column nav-pills" id="v-pills-tab" role="tablist" aria-orientation="vertical">
-        <a class="nav-link active" id="v-pills-home-tab" data-toggle="pill" href="admin.html" role="tab"
+        <a class="nav-link active" id="v-pills-home-tab" data-toggle="pill" href="#v-pills-home" role="tab"
            aria-controls="v-pills-home" aria-selected="true">Admin</a>
-        <a class="nav-link" id="v-pills-profile-tab" data-toggle="pill" href="userPage.html" role="tab"
+        <a class="nav-link" id="v-pills-profile-tab" data-toggle="pill" href="#v-pills-profile" role="tab"
            aria-controls="v-pills-profile" aria-selected="false">User</a>
       </div>
     </div>
     <div class="col-10 pt-2 bg-light">
       <div class="tab-content" id="v-pills-tabContent">
-        <div class="tab-pane fade show active" id="adminPage" role="tabpanel"
+        <div class="tab-pane fade show active" id="v-pills-home" role="tabpanel"
              aria-labelledby="v-pills-home-tab">
           <h1>Admin panel</h1>
           <nav>
             <div class="nav nav-tabs" id="nav-tab" role="tablist">
-              <a class="nav-item nav-link active" id="nav-admin-tab" data-toggle="tab" href="#nav-admin-tab"
+              <a class="nav-item nav-link active" id="nav-home-tab" data-toggle="tab" href="#nav-home"
                  role="tab" aria-controls="nav-home" aria-selected="true">User table</a>
-              <a class="nav-item nav-link" id="nav-profile-tab" data-toggle="tab" href="#nav-profile-tab"
+              <a class="nav-item nav-link" id="nav-profile-tab" data-toggle="tab" href="#nav-profile"
                  role="tab" aria-controls="nav-profile" aria-selected="false">New User</a>
             </div>
           </nav>
           <div class="tab-content" id="nav-tabContent">
             <div class="tab-pane fade show active" id="nav-home" role="tabpanel"
-                 aria-labelledby="nav-home-tab" href="#nav-home">
+                 aria-labelledby="nav-home-tab">
               <div class="col-12 bg-light border">
                 <h5 class="pl-3 pt-2 pb-2">All users</h5>
               </div>
@@ -56,8 +54,8 @@
                 <thead>
                 <tr>
                   <th scope="col">ID</th>
-                  <th scope="col">First name</th>
-                  <th scope="col">Last name</th>
+                  <th scope="col">Name</th>
+                  <th scope="col">LastName</th>
                   <th scope="col">Age</th>
                   <th scope="col">Email</th>
                   <th scope="col">Role</th>
@@ -90,8 +88,8 @@
                       <input type="number" id="AgeNew" class="form-control" placeholder="Age">
                     </div>
                     <div class="form-group text-center">
-                      <label class="font-weight-bold" for="usernameNew">Email</label>
-                      <input id="usernameNew" class="form-control" placeholder="Email">
+                      <label class="font-weight-bold" for="emailNew">Email</label>
+                      <input id="emailNew" class="form-control" placeholder="Email">
                     </div>
                     <div class="form-group text-center">
                       <label class="font-weight-bold" for="passwordNew">Password</label>
@@ -120,7 +118,7 @@
             <thead>
             <tr>
               <th scope="col">Id</th>
-              <th scope="col">First name</th>
+              <th scope="col">Name</th>
               <th scope="col">Last name</th>
               <th scope="col">Age</th>
               <th scope="col">Email</th>
@@ -150,23 +148,23 @@
       <div class="modal-body text-center col-12 offset-3 col-md-6 offset-md-3">
         <div class="form-group">
           <label class="font-weight-bold" for="idEditModal">ID</label>
-          <input id="idEditModal" class="form-control" placeholder="Id" readonly>
+          <input id="idEditModal" class="form-control" placeholder="ID" readonly>
         </div>
         <div class="form-group text-center">
-          <label class="font-weight-bold" for="nameEditModal">First name</label>
+          <label class="font-weight-bold" for="nameEditModal">Name</label>
           <input id="nameEditModal" class="form-control" placeholder="Name">
         </div>
         <div class="form-group text-center">
-          <label class="font-weight-bold" for="lastNameEditModal">First name</label>
-          <input id="lastNameEditModal" class="form-control" placeholder="Last Name">
+          <label class="font-weight-bold" for="lastNameEditModal">Last name</label>
+          <input id="lastNameEditModal" class="form-control" placeholder="Last name">
         </div>
         <div class="form-group text-center">
           <label class="font-weight-bold" for="ageEditModal">Age</label>
           <input id="ageEditModal" type="number" class="form-control" placeholder="Age">
         </div>
         <div class="form-group text-center">
-          <label class="font-weight-bold" for="usernameEditModal">Email</label>
-          <input id="usernameEditModal" class="form-control" placeholder="Email">
+          <label class="font-weight-bold" for="emailEditModal">Email</label>
+          <input id="emailEditModal" class="form-control" placeholder="Email">
         </div>
         <div class="form-group text-center">
           <label class="font-weight-bold" for="passwordEditModal">Password</label>
@@ -205,7 +203,7 @@
             <input id="nameDelModal" class="form-control" readonly>
           </div>
           <div class="form-group text-center">
-            <label class="font-weight-bold" for="lastNameDelModal">Name</label>
+            <label class="font-weight-bold" for="lastNameDelModal">Last name</label>
             <input id="lastNameDelModal" class="form-control" readonly>
           </div>
           <div class="form-group text-center">
