@@ -16,7 +16,6 @@ import ru.kata.spring.boot_security.demo.entity.User;
 import ru.kata.spring.boot_security.demo.service.RoleService;
 import ru.kata.spring.boot_security.demo.service.UserService;
 
-import java.util.List;
 
 @Author(name = "Victor Gabbasov", dateOfCreation = 2022)
 @FieldDefaults(makeFinal = true, level = AccessLevel.PRIVATE)
@@ -36,13 +35,10 @@ public class AdminController {
 
     @GetMapping()
     public String getAdminPage(Model model) {
-        List<User> userList = userService.getAllUsers();
-        User user = userService.findByUserName(getCurrentUsername());
-        model.addAttribute("roles", user.getRoles());
-        model.addAttribute("admin", user);
-        model.addAttribute("people", userList);
-        User newUser = new User();
-        model.addAttribute("person", newUser);
+        model.addAttribute("roles", userService.getAllUsers());
+        model.addAttribute("admin", userService.findByUserName(getCurrentUsername()));
+        model.addAttribute("people", userService.getAllUsers());
+        model.addAttribute("person", new User());
         return "admin";
     }
 

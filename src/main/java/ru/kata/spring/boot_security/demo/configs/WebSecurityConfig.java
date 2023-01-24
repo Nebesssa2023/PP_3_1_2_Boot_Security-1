@@ -39,24 +39,16 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
         http
                 .csrf().disable()
                 .authorizeRequests()
-                .antMatchers("/", "/login", "/error").permitAll()
-                .antMatchers("/admin/**").hasRole("ADMIN")
-                .antMatchers("/user").hasAnyRole("USER", "ADMIN")
+                .antMatchers("/admin").hasRole("ADMIN")
+                .antMatchers("/user").hasAnyRole("ADMIN", "USER")
+                .antMatchers("/error", "/login").permitAll()
                 .anyRequest().authenticated()
                 .and()
-                .formLogin()
-                .loginPage("/login")
-                .loginProcessingUrl("/process_login")
-                .successHandler(successUserHandler)
-                .failureUrl("/login?error=true")
+                .formLogin().successHandler(successUserHandler)
+                .permitAll()
                 .and()
-                .logout()
-                .logoutRequestMatcher(new AntPathRequestMatcher
-                        ("/logout", "POST"))
-                .invalidateHttpSession(true)
-                .clearAuthentication(true)
-                .deleteCookies("JSESSIONID")
-                .logoutSuccessUrl("/login");
+                .logout().logoutUrl("/logout").logoutSuccessUrl("/login")
+                .permitAll();
     }
 
     @Bean

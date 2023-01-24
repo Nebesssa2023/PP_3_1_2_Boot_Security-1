@@ -35,7 +35,7 @@ function createTable(data) {
         temp += "<td>";
         let rolesStr = "";
         u.roles.forEach(r => {
-            rolesStr += r.role.replaceAll("ROLE_", "") + " ";
+            rolesStr += r.role.substring(5) + "";
         })
         temp += rolesStr + "</td>";
         temp += "<td><button class=\"btn btn-info\" onclick=\"fEdit(this)\" id=\"editBtn" + u.id + "\">Edit</button></td>";
@@ -58,7 +58,7 @@ fetch('http://localhost:8088/rest/user').then(
                 temp += "<td>";
                 let rolesStr = "";
                 data.roles.forEach(r => {
-                    rolesStr += r.role.replaceAll("ROLE_", "") + " ";
+                    rolesStr += r.role.substring(5) + " ";
                 })
                 temp += rolesStr + "</td>" + "</tr>";
                 document.getElementById("tableUserBody2").innerHTML = temp;
@@ -90,10 +90,10 @@ $('#addUserBtn').click(function () {
         password: "",
         roles: []
     };
-    newUser.username = document.getElementById("emailNew").value;
     newUser.name = document.getElementById("nameNew").value;
     newUser.lastName = document.getElementById("lastNameNew").value;
-    newUser.age = document.getElementById("AgeNew").value;
+    newUser.age = document.getElementById("ageNew").value;
+    newUser.username = document.getElementById("emailNew").value;
     newUser.password = document.getElementById("passwordNew").value;
     newUser.roles = [];
     [].slice.call(document.getElementById("rolesNew")).forEach(op => {
@@ -108,7 +108,7 @@ $('#addUserBtn').click(function () {
     fetch('http://localhost:8088/rest/users', {
         method: 'POST',
         body: JSON.stringify(newUser),
-        headers: {'Content-Type': 'application/json'}
+        headers: {'Content-Type': 'application/json; charset=UTF-8' }
     }).then(res1 => {
         if (res1.ok) {
             res1.json().then(u => {
@@ -117,12 +117,12 @@ $('#addUserBtn').click(function () {
             })
             document.getElementById("nameNew").value = "";
             document.getElementById("lastNameNew").value = "";
-            document.getElementById("AgeNew").value = "";
+            document.getElementById("ageNew").value = "";
             document.getElementById("emailNew").value = "";
             document.getElementById("passwordNew").value = "";
             document.getElementById("rolesNew").selectedIndex = -1;
         } else {
-            alert("Не удалось добавить: " + res1.status);
+            alert("Error while adding: " + res1.status);
         }
     })
 
@@ -170,7 +170,7 @@ $('#editUserBtn').click(function () {
     fetch('http://localhost:8088/rest/users/' + id, {
         method: 'PUT',
         body: JSON.stringify(edit),
-        headers: {'Content-Type': 'application/json'}
+        headers: {'Content-Type': 'application/json; charset=UTF-8'}
     })
         .then(res => {
             if (res.ok) {
@@ -250,7 +250,7 @@ function fDel(el) {
             document.getElementById("rolesDelModal").size = u.roles.length.toString();
             let temp = "";
             u.roles.forEach(r => {
-                temp += "<option>" + r.role.replaceAll("ROLE_", "") + "</option>";
+                temp += "<option>" + r.role.substring(5) + "</option>";
             })
             document.getElementById("rolesDelModal").innerHTML = temp;
         }

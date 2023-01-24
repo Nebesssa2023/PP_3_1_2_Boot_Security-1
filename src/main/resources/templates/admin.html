@@ -13,7 +13,7 @@
   <div class="navbar-text px-3">
     <strong><a th:utext="${admin.username}"></a></strong>
     <a>with roles:</a>
-    <a th:utext="${admin.roles}"></a>
+    <a th:utext="${admin.getRoles()}"></a>
   </div>
   <ul class="navbar-nav px-3">
     <li class="nav-item text-nowrap">
@@ -54,7 +54,7 @@
                 <thead>
                 <tr>
                   <th scope="col">ID</th>
-                  <th scope="col">Name</th>
+                  <th scope="col">First name</th>
                   <th scope="col">LastName</th>
                   <th scope="col">Age</th>
                   <th scope="col">Email</th>
@@ -84,8 +84,8 @@
                       <input id="lastNameNew" class="form-control" placeholder="Last name">
                     </div>
                     <div class="form-group text-center">
-                      <label class="font-weight-bold" for="AgeNew">Age</label>
-                      <input type="number" id="AgeNew" class="form-control" placeholder="Age">
+                      <label class="font-weight-bold" for="ageNew">Age</label>
+                      <input type="number" id="ageNew" class="form-control" placeholder="Age">
                     </div>
                     <div class="form-group text-center">
                       <label class="font-weight-bold" for="emailNew">Email</label>
@@ -118,7 +118,7 @@
             <thead>
             <tr>
               <th scope="col">Id</th>
-              <th scope="col">Name</th>
+              <th scope="col">First name</th>
               <th scope="col">Last name</th>
               <th scope="col">Age</th>
               <th scope="col">Email</th>

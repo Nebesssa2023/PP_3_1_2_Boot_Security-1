@@ -8,10 +8,10 @@ fetch("/api/user").then(
                         temp += "<td>" + data.name + "</td>";
                         temp += "<td>" + data.lastName + "</td>";
                         temp += "<td>" + data.age + "</td>";
-                        temp += "<td>" + data.email + "</td>";
+                        temp += "<td>" + data.username + "</td>";
                         let rolesStr = "";
                         data.roles.forEach(r => {
-                                rolesStr += r.role.replaceAll("ROLE_", "") + " ";
+                                rolesStr += r.role.substring(5) + " ";
                         })
                         temp += rolesStr + "</td>" + "</tr>";
                         document.getElementById("tableUserBody").innerHTML = temp;

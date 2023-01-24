@@ -1,7 +1,6 @@
 package ru.kata.spring.boot_security.demo.entity;
 
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.*;
 import lombok.experimental.FieldDefaults;
 import org.hibernate.annotations.DynamicInsert;
@@ -55,9 +54,9 @@ public class User implements Serializable, UserDetails {
     @Size(min = 3, max = 200, message = "Password should be between 8 and 100 characters")
     String password;
 
-    @ManyToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    @ManyToMany(fetch = FetchType.LAZY)
     @JoinTable(name = "users_roles",
-            joinColumns = {@JoinColumn(name = "user_id")},
+            joinColumns = {@JoinColumn(name = "users_id")},
             inverseJoinColumns = {@JoinColumn(name = "roles_id")})
     Set<Role> roles;
 
