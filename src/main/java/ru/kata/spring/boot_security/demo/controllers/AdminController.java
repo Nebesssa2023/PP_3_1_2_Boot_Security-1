@@ -13,7 +13,6 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import ru.kata.spring.boot_security.demo.entity.Author;
 import ru.kata.spring.boot_security.demo.entity.User;
-import ru.kata.spring.boot_security.demo.service.RoleService;
 import ru.kata.spring.boot_security.demo.service.UserService;
 
 
@@ -25,12 +24,10 @@ import ru.kata.spring.boot_security.demo.service.UserService;
 public class AdminController {
 
     UserService userService;
-    RoleService roleService;
 
     @Autowired
-    public AdminController(UserService userService, RoleService roleService) {
+    public AdminController(UserService userService) {
         this.userService = userService;
-        this.roleService = roleService;
     }
 
     @GetMapping()
@@ -38,8 +35,8 @@ public class AdminController {
         model.addAttribute("roles", userService.getAllUsers());
         model.addAttribute("admin", userService.findByUserName(getCurrentUsername()));
         model.addAttribute("people", userService.getAllUsers());
-        model.addAttribute("person", new User());
-        return "admin";
+        model.addAttribute("newUser", new User());
+        return "adminPage";
     }
 
     public String getCurrentUsername() {

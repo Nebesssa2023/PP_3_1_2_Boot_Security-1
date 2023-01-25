@@ -4,6 +4,7 @@ package ru.kata.spring.boot_security.demo.controllers;
 import lombok.AccessLevel;
 import lombok.experimental.FieldDefaults;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -31,7 +32,10 @@ public class UserRestController {
 
     @GetMapping
     public ResponseEntity<User> showUser(Principal principal) {
-        return ResponseEntity.ok((User)
-                userService.loadUserByUsername(principal.getName()));
+        User user = userService.findByUserName(principal.getName());
+
+        return user != null
+                ? new ResponseEntity<>(user, HttpStatus.OK)
+                : new ResponseEntity<>(HttpStatus.NOT_FOUND);
     }
 }

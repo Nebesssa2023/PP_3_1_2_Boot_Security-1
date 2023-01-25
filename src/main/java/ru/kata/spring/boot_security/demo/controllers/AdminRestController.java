@@ -36,7 +36,10 @@ public class AdminRestController {
 
     @GetMapping("/roles")
     public ResponseEntity<List<Role>> getAllRoles() {
-        return new ResponseEntity<>(roleService.getAllRoles(), HttpStatus.OK);
+        List<Role> roles = roleService.getAllRoles();
+        return roles != null
+                ? new ResponseEntity<>(roles, HttpStatus.OK)
+                : new ResponseEntity<>(HttpStatus.NOT_FOUND);
     }
 
     @PostMapping("/users")
@@ -47,7 +50,11 @@ public class AdminRestController {
 
     @GetMapping("/user")
     public ResponseEntity<UserDetails> getUserById(Principal principal) {
-        return new ResponseEntity<>(userService.loadUserByUsername(principal.getName()), HttpStatus.OK);
+        User user = userService.findByUserName(principal.getName());
+
+        return user != null
+                ? new ResponseEntity<>(user, HttpStatus.OK)
+                : new ResponseEntity<>(HttpStatus.NOT_FOUND);
     }
 
     @GetMapping("/users")
@@ -68,6 +75,6 @@ public class AdminRestController {
     @DeleteMapping("/users/{id}")
     public ResponseEntity<Void> deleteUserById(@PathVariable("id") Long id) {
         userService.deleteUserById(id);
-        return ResponseEntity.ok().build();
+        return new ResponseEntity<>(HttpStatus.OK);
     }
 }

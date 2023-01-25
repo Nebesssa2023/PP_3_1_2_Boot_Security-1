@@ -93,4 +93,9 @@ public class User implements Serializable, UserDetails {
     public boolean isEnabled() {
         return true;
     }
+
+
+    public String getRoleString() {
+        return roles.toString().substring(5);
+    }
 }

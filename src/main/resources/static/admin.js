@@ -1,7 +1,7 @@
 let allUsers;
 let allRoles;
 
-fetch('http://localhost:8088/rest/roles').then(
+fetch('/rest/roles').then(
     res => {
         res.json().then(
             roles => {
@@ -11,7 +11,7 @@ fetch('http://localhost:8088/rest/roles').then(
     }
 )
 
-fetch('http://localhost:8088/rest/users').then(
+fetch('/rest/users').then(
     res => {
         res.json().then(
             data => {
@@ -44,7 +44,7 @@ function createTable(data) {
     document.getElementById("usersTableBody").innerHTML = temp;
 }
 
-fetch('http://localhost:8088/rest/user').then(
+fetch('/rest/user').then(
     res => {
         res.json().then(
             data => {
@@ -56,17 +56,17 @@ fetch('http://localhost:8088/rest/user').then(
                 temp += "<td>" + data.age + "</td>";
                 temp += "<td>" + data.username + "</td>";
                 temp += "<td>";
-                let rolesStr = "";
+                let rolesString = "";
                 data.roles.forEach(r => {
-                    rolesStr += r.role.substring(5) + " ";
+                    rolesString += r.role.substring(5) + " ";
                 })
-                temp += rolesStr + "</td>" + "</tr>";
+                temp += rolesString + "</td>" + "</tr>";
                 document.getElementById("tableUserBody2").innerHTML = temp;
             }
         )
     }
 )
-fetch('http://localhost:8088/rest/roles').then(
+fetch('/rest/roles').then(
     res => {
         res.json().then(
             roles => {
@@ -105,10 +105,10 @@ $('#addUserBtn').click(function () {
             })
         }
     })
-    fetch('http://localhost:8088/rest/users', {
+    fetch('/rest/users', {
         method: 'POST',
         body: JSON.stringify(newUser),
-        headers: {'Content-Type': 'application/json; charset=UTF-8' }
+        headers: {'Content-Type': 'application/json; charset=UTF-8'}
     }).then(res1 => {
         if (res1.ok) {
             res1.json().then(u => {
@@ -167,7 +167,7 @@ $('#editUserBtn').click(function () {
         }
     })
     console.log(edit)
-    fetch('http://localhost:8088/rest/users/' + id, {
+    fetch('/rest/users/' + id, {
         method: 'PUT',
         body: JSON.stringify(edit),
         headers: {'Content-Type': 'application/json; charset=UTF-8'}
@@ -196,7 +196,7 @@ $('#delUserBtn').click(function () {
     let id = document.getElementById("idDelModal").value;
     $('#deleteModal').modal('hide');
 
-    fetch('http://localhost:8088/rest/users/' + id, {method: 'DELETE'})
+    fetch('/rest/users/' + id, {method: 'DELETE'})
         .then(res => {
             if (res.ok) {
                 document.getElementById(id).remove();
